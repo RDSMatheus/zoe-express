@@ -1,0 +1,17 @@
+body{
+  background-color: var(--cor-03);
+}
+.cadastro{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.cadastro-endereco{
+  background-color: var(--cor-11);
+  padding: 40px;
+  border-radius: 5px 0 0 5px;
+}
+.cadastro-form{
+  background-color: var(--cor-00);
+  padding: 40px;
+  border-radius: 0 5px 5px 0;
+}

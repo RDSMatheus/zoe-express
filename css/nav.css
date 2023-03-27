@@ -1,0 +1,15 @@
+.navegacao-bg {
+  background-color: var(--cor-11);
+}
+
+.navegacao {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
