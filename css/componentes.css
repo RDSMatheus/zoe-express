@@ -12,15 +12,33 @@
   border: none;
   outline: none;
 }
-label{
+
+.link{
+  text-transform: uppercase;
+  font: 700 1.5rem/1.5 "Poppins", sans-serif;
+  color: var(--cor-p2);
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.link::after{
+  content: "";
   display: block;
+  width: 100%;
+  height: 4px;
+  background-color: currentColor;
+}
+
+label{
+  display: inline-block;
   margin-bottom: 8px;
 }
 input + label {
   margin-top: 10px;
 }
-input{
-  display: block;
+input[type="text"],
+input[type="email"],
+textarea{
   width: 100%;
   border: none;
   padding: 10px;
@@ -31,4 +49,8 @@ input:focus-visible{
   box-shadow: 0 0 5px var(--cor-p2);
   border: none;
   outline: none;
+}
+
+.col{
+  grid-column: 1/-1;
 }

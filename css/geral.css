@@ -4,19 +4,23 @@
   list-style: none;
   text-decoration: none;
 }
+
 img{
   display: block;
   max-width: 100%;
   border-radius: 4px;
 }
+
 a{
   color: inherit;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
+
 .cadastros li ul {
   display: flex;
   padding: 20px;

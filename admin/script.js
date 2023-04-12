@@ -8,6 +8,7 @@ function teste() {
       console.log('yuri é bicha');
     }
   }
+  
   //deleta um cliente do banco de dados
   function deleteUser(id, usuario) {
     const confirmar = confirm(
@@ -32,7 +33,7 @@ function teste() {
     <li>Tel: ${cliente.cel}</li>
     <button id="delete${cliente.id}">Deletar</button>
     `;
-    const id = ul.querySelector('button');
+    const id = ul.querySelector(`#delete${cliente.id}`);
     if (id) {
       id.addEventListener('click', () => {
         deleteUser(cliente.id, cliente.name);

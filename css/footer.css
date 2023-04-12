@@ -1,0 +1,13 @@
+.footer-bg{
+  background: var(--cor-12);
+}
+
+.footer{
+ display: grid;
+ grid-template-columns: 2fr 3fr 3fr;
+ padding: 50px;
+}
+
+.footer li+li {
+  margin-top: 10px;
+}
