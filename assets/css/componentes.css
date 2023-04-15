@@ -38,15 +38,18 @@ input + label {
 }
 input[type="text"],
 input[type="email"],
-textarea{
+textarea,
+select{
   width: 100%;
   border: none;
   padding: 10px;
   border-radius: 4px;
   background-color: var(--cor-02);
 }
-input:focus-visible{
+input:focus-visible,
+textarea:focus-visible{
   box-shadow: 0 0 5px var(--cor-p2);
+  background-color: var(--cor-00);
   border: none;
   outline: none;
 }

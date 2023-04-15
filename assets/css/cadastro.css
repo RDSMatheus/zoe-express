@@ -39,11 +39,7 @@
 }
 
 .cadastro-form{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   background-color: var(--cor-00);
-  padding: 40px;
-  gap: 30px;
   border-radius: 0 5px 5px 0;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
 }
@@ -55,7 +51,7 @@
 }
 
 .cadastro-form h3::before{
-  content: url("../zoe-express.svg");
+  content: url("../img/zoe-express.svg");
   width: 10px;
   height: 10px;
   display: block;
@@ -65,3 +61,41 @@
   top: -20px;
 }
 
+.cadastro-item{
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  padding: 40px;
+  gap: 30px;
+}
+.cadastro-item.ativo{
+  display: grid;
+  animation: animeLeft .3s forwards;
+}
+
+@keyframes animeLeft {
+  from{
+    transform: translate(-20px);
+  }
+  to{
+    transform: initial;
+  }
+}
+
+
+@media (max-width: 700px){
+  .cadastro {
+    grid-template-columns: 1fr;
+  }
+  .cadastro-endereco{
+    padding: 20px 40px;
+    border-radius: 5px 5px 0 0;
+  }
+  .cadastro-form{
+    grid-template-columns: 1fr;
+    background-color: var(--cor-00);
+    border-radius: 0 0 5px 5px;
+  }
+  .cadastro-redes{
+    justify-content: start;
+  }
+}

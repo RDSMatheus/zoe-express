@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./style.css">
   <title>ZOÉ Express</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -17,28 +17,28 @@
 <body>
   <header class="navegacao-bg">
     <div class="navegacao container font-1-m">
-      <img src="../zoe-express.svg" alt="logo">
+      <a href="./index.html"><img src="./assets/img/zoe-express.svg" alt="logo zoe-express"></a>
       <nav>
         <ul class="menu cor-00">
-          <li><a href="./">Sobre</a></li>
-          <li><a href="">Contato</a></li>
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./cadastro.html">Cadastro</a></li>
+          <li><a href="./rastreio.html">Rastreio</a></li>
+          <li><a href="./contato.html">Contato</a></li>
+          <li><a href="./simular-valores.html">Simular Valores</a></li>
+          <li><a href="./fazer-pedido.html">Fazer Pedido</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="cadastro container font-1-m">
+  <section class="cadastro container font-1-m">
     <div class="cadastro-titulo col">
-      <h2 class="font-1-xxl">Faça seu pedido.</h2>
+      <h2 class="font-1-xxl">Fale Conosco.</h2>
       <p class="font-1-m-b cor-09">Entraremos em contato o mais rápido possivel!</p>
     </div>
 
     <div class="cadastro-endereco cor-00">
       <h3 class="font-1-m-b">endereço</h3>
       <ul>
-        <img src="../local.svg" alt="">
+        <img src="./assets/img/local.svg" alt="">
         <li>
           <p>Bacabal-MA</p>
         </li>
@@ -48,7 +48,7 @@
       </ul>
       <h3 class="font-1-m-b">contato</h3>
       <ul>
-        <img src="../email.svg" alt="">
+        <img src="./assets/img/email.svg" alt="">
         <li>
           <p>email@email.com</p>
         </li>
@@ -59,61 +59,61 @@
 
       <div class="cadastro-redes">
         <div>
-          <img src="../instagram-p.svg" alt="">
+          <img src="./assets/img/instagram-p.svg" alt="">
         </div>
 
         <div>
-          <img src="../facebook-p.svg">
+          <img src="./assets/img/facebook-p.svg">
         </div>
 
         <div>
-          <img src="../whatsapp-128-svgrepo-com.svg">
+          <img src="./assets/img/whatsapp.svg">
         </div>
       </div>
 
     </div>
     <form class="cadastro-form cor-10" action="">
-      <h3 class="font-1-m-b">dados pessoais</h3>
-      <div class="col">
-        <label for="name">Nome completo</label>
-        <input type="text" id="name" required>
+      <div class="cadastro-item">
+        <h3 class="font-1-m-b">1. Preencha o formulário.</h3>
+        <div class="col">
+          <label for="nome-contato">Nome completo</label>
+          <input type="text" id="nome-contato" required>
+        </div>
+
+        <div>
+          <label for="cel-contato">Telefone</label>
+          <input type="text" id="cel-contato" required>
+        </div>
+
+        <div>
+          <label for="email-contato">Email</label>
+          <input type="email" id="email-contato" required>
+
+        </div>
+
+        <div class="col">
+          <label for="produto">Qual a sua dúvida:</label>
+          <textarea name="produto" id="produto-contato" rows="10"></textarea>
+
+        </div>
+
+
+
+        <button class="btn col">Enviar</button>
       </div>
 
-      <div>
-        <label for="cpf">CPF/CNPJ</label>
-        <input type="text" id="cpf" required>
-      </div>
-
-      <div>
-        <label for="cel">Telefone</label>
-        <input type="text" id="cel" required>
-      </div>
-
-      <div class="col">
-        <label for="email">Email</label>
-        <input type="email" required>
-
-      </div>
-
-      <div class="col">
-        <label for="produto">Descreva o produto:</label>
-        <textarea name="produto" id="produto" rows="10"></textarea>
-
-      </div>
-
-
-
-      <button class="btn col">Cadastrar</button>
     </form>
 
-  </main>
+  </section>
 
   <footer class="footer-bg cor-00">
     <div class="container footer font-2-l">
-      <div><img src="../zoe-express.svg" alt=""></div>
+      <div>
+        <img src="./assets/img/zoe-express.svg" alt="">
+      </div>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale com a gente</a></li>
+          <li><a href="">Fale conosco</a></li>
           <li><a href="">Rastreio</a></li>
           <li><a href="">Pedidos</a></li>
           <li><a href="">Cadastro</a></li>
@@ -121,7 +121,7 @@
       </nav>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale com a gente</a></li>
+          <li><a href="">Fale conosco</a></li>
           <li><a href="">Rastreio</a></li>
           <li><a href="">Pedidos</a></li>
           <li><a href="">Cadastro</a></li>

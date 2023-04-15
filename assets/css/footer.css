@@ -1,0 +1,34 @@
+.footer-bg{
+  background: var(--cor-12);
+  position: relative;
+  z-index: 9999;
+}
+
+.footer{
+ display: grid;
+ grid-template-columns: 2fr 3fr 3fr;
+ padding: 50px;
+}
+
+.footer li+li {
+  margin-top: 10px;
+}
+
+@media (max-width:600px){
+  .footer{
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .footer-nav{
+    grid-column: 2/-1;
+  }
+}
+
+@media(max-width:500px) {
+  .footer{
+    grid-template-columns: 1fr;
+  }
+  .footer-nav{
+    grid-column: initial;
+  }
+}

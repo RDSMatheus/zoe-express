@@ -1,11 +1,13 @@
-@import "./css/cores.css";
-@import "./css/geral.css";
-@import "./css/nav.css";
-@import "./css/componentes.css";
-@import "./css/tipografia.css";
+@import "./assets/css/cores.css";
+@import "./assets/css/geral.css";
+@import "./assets/css/nav.css";
+@import "./assets/css/componentes.css";
+@import "./assets/css/tipografia.css";
 
-@import "./css/home.css";
-@import "./css/cadastro.css";
-@import "./css/pedidos.css";
-@import "./css/footer.css";
+@import "./assets/css/home.css";
+@import "./assets/css/cadastro.css";
+@import "./assets/css/pedidos.css";
+@import "./assets/css/footer.css";
+@import "./assets/css/rastreio.css";
+@import "./assets/css/valores.css";
 
