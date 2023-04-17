@@ -1,3 +1,5 @@
+import fetchDados from './fetchDados';
+
 export default class SimularValores {
   constructor(abrir, form, container) {
     this.abrir = document.querySelector(abrir);
@@ -9,26 +11,33 @@ export default class SimularValores {
   }
 
   async dadosFetch() {
-    const img = document.createElement('img');
-    img.src = './assets/img/loading.svg';
-    img.className = "rotate-image";
-    this.container.appendChild(img);
-    try {
-      const dados = await fetch(
-        'https://zoe-production-4a9e.up.railway.app/product',
-      );
-      const dadosJson = await dados.json();
-      console.log(dadosJson);
-      return dadosJson;
-    } catch (error) {
-      console.log(error);
-    } finally{
-      this.container.removeChild(img)
+    if (this.form[0].value && this.form[1].value) {
+      const img = document.createElement('img');
+      img.src = './assets/img/loading.svg';
+      img.className = 'rotate-image';
+      this.container.appendChild(img);
+      try {
+        console.log(this.form[0].value);
+        console.log('olá');
+        const dadosJson = await fetchDados(
+          'https://zoe-production-4a9e.up.railway.app/product',
+          'GET',
+        );
+        console.log(dadosJson);
+        return dadosJson;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.container.removeChild(img);
+      }
     }
+    return null;
   }
 
   createDiv(valor) {
-    const divAnterior = this.container.querySelector('.valores-popup');
+    const divAnterior =
+      this.container.querySelector('.valores-popup-error') ||
+      this.container.querySelector('.valores-popup');
     if (divAnterior) {
       this.container.removeChild(divAnterior);
     }
@@ -50,21 +59,25 @@ export default class SimularValores {
 
       let value = null;
 
-      dadosJson.forEach((item) => {
-        const [origem, destino] = item.name.toLowerCase().split('x');
-        if (
-          (origem === select1 && destino === select2) ||
-          (origem === select2 && destino === select1)
-        ) {
-          value = item.price;
-        }
-        console.log(origem);
-      });
+      if (dadosJson) {
+        dadosJson.forEach((item) => {
+          const [origem, destino] = item.name.toLowerCase().split('x');
+          if (
+            (origem === select1 && destino === select2) ||
+            (origem === select2 && destino === select1)
+          ) {
+            value = item.price;
+          }
+        });
+      } else {
+        // eslint-disable-next-line no-alert
+        window.alert('[ERROR] Insira um valor válido!');
+      }
+
       if (value) {
         console.log(value);
         this.createDiv(value);
       }
-      console.log(`${select1},${select2}`);
     });
   }
 
