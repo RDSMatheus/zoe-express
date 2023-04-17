@@ -62,19 +62,24 @@
 }
 
 .cadastro-item{
-  display: none;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 40px;
   gap: 30px;
 }
-.cadastro-item.ativo{
-  display: grid;
-  animation: animeLeft .3s forwards;
+
+.cadastro-item[data-fazer-pedido]{
+  display: none;
 }
 
-@keyframes animeLeft {
+.cadastro-item.ativo{
+  display: grid;
+  animation: animeDown .3s forwards;
+}
+
+@keyframes animeDown {
   from{
-    transform: translate(-20px);
+    transform: translateY(-20px);
   }
   to{
     transform: initial;

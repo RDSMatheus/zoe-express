@@ -4,13 +4,19 @@
 .hero-section{
   padding-top: 40px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: start;
 }
 
-.hero-section h1{
-  margin-bottom: 10px;
+.hero-section-titulo{
+  margin-bottom: 10px;;
+  display: grid;
+  align-items: end;
+}
+
+.hero-section-titulo span {
+  place-self: center;
 }
 .hero-section-img img{
   width: 100%;

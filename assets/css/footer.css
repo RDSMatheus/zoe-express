@@ -10,6 +10,10 @@
  padding: 50px;
 }
 
+.footer a:hover{
+  color: var(--cor-00);
+}
+
 .footer li+li {
   margin-top: 10px;
 }

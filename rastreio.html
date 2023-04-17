@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>ZOÉ Express</title>
+  <title>ZOÉ | Pedido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +17,9 @@
 <body>
   <header class="navegacao-bg">
     <div class="navegacao container font-1-m">
-      <a href="./index.html"><img src="./assets/img/zoe-express.svg" alt="logo zoe-express"></a>
+      <a href="./dist/index.html"><img src="./assets/img/zoe-express.svg" alt="logo zoe-express"></a>
       <nav>
+        <button class="btn-menu-mobile" id="btn-menu-mobile"><img src="./assets/img/burger-menu.svg" alt="Menu mobile"></button>
         <ul class="menu cor-00">
           <li><a href="./rastreio.html">Rastreio</a></li>
           <li><a href="./contato.html">Contato</a></li>
@@ -29,38 +30,71 @@
     </div>
   </header>
 
-  <form class="rastreio-bg">
-    <div class="container rastreio font-1-l cor-02">
+  <form class="rastreio-bg" data-form='rastreio'>
+    <div class="container rastreio font-1-l cor-02" data-anime="slide-up">
       <label for="ratreio">Insira seu código de rastreio:</label>
       <input type="text" id="rastreio">
-      <button class="btn">Consultar</button>
+      <button class="btn" id="btn-rastreio">Consultar</button>
     </div>
   </form>
 
-  <footer class="footer-bg cor-00">
+  <footer class="footer-bg cor-05">
     <div class="container footer font-2-l">
       <div>
         <img src="./assets/img/zoe-express.svg" alt="">
       </div>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale conosco</a></li>
-          <li><a href="">Rastreio</a></li>
-          <li><a href="">Pedidos</a></li>
-          <li><a href="">Cadastro</a></li>
+          <li><a href="./contato.html">Fale conosco</a></li>
+          <li><a href="./rastreio.html">Rastreio</a></li>
+          <li><a href="./fazer-pedido.html">Pedidos</a></li>
+          <li><a href="./simular-valores.html">Simular Valores</a></li>
         </ul>
       </nav>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale conosco</a></li>
-          <li><a href="">Rastreio</a></li>
-          <li><a href="">Pedidos</a></li>
-          <li><a href="">Cadastro</a></li>
+          <li><a href="./contato.html">Fale conosco</a></li>
+          <li><a href="./rastreio.html">Rastreio</a></li>
+          <li><a href="./fazer-pedido.html">Pedidos</a></li>
+          <li><a href="./simular-valores.html">Simular Valores</a></li>
         </ul>
       </nav>
     </div>
 
   </footer>
+  <div class="menu-mobile">
+    <div class="header-menu-mobile">
+      <a href="./dist/index.html"><img src="./assets/img/zoe-express-preto.svg" alt=""></a>
+      <button class="btn-mobile-fechar" id="btn-mobile-fechar">
+        <img src="./assets/img/close-button.svg" alt="">
+      </button>
+    </div>
+    <nav>
+
+      <ul class="cor-p5 font-1-xl">
+        <li><a href="./rastreio.html">Rastreio</a></li>
+        <li><a href="./contato.html">Contato</a></li>
+        <li><a href="./simular-valores.html">Simular Valores</a></li>
+        <li><a href="./fazer-pedido.html">Fazer Pedido</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div data-rastreio class="rastreio-modal">
+    <div class="rastreio-container" data-anime="slide-up">
+      <h3 class="font-1-xl cor-11">Confira o rastreio do seu produto.</h3>
+      <button class="btn-rastreio-fechar" id="btn-rastreio-fechar">
+        <img src="./assets/img/close-button.svg" alt="">
+      </button>
+      <ul class="rastreio-status">
+        <li><img src="./assets/img/email.svg" alt=""></li>
+        <li><img src="./assets/img/email.svg" alt=""></li>
+        <li><img src="./assets/img/email.svg" alt=""></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./dist/bundle.js"></script>
 
 </body>
 

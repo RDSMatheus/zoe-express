@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>ZOÉ Express</title>
+  <title>ZOÉ | Pedido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +17,9 @@
 <body>
   <header class="navegacao-bg">
     <div class="navegacao container font-1-m">
-      <a href="./index.html"><img src="./assets/img/zoe-express.svg" alt="logo zoe-express"></a>
+      <a href="./dist/index.html"><img src="./assets/img/zoe-express.svg" alt="logo zoe-express"></a>
       <nav>
+        <button class="btn-menu-mobile" id="btn-menu-mobile"><img src="./assets/img/burger-menu.svg" alt="Menu mobile"></button>
         <ul class="menu cor-00">
           <li><a href="./rastreio.html">Rastreio</a></li>
           <li><a href="./contato.html">Contato</a></li>
@@ -29,7 +30,7 @@
     </div>
   </header>
 
-  <section class="cadastro container font-1-m">
+  <section class="cadastro container font-1-m" data-anime="slide-down">
     <div class="cadastro-titulo col">
       <h2 class="font-1-xxl">Faça seu pedido.</h2>
       <p class="font-1-m-b cor-09">Entraremos em contato o mais rápido possivel!</p>
@@ -53,27 +54,30 @@
           <p>email@email.com</p>
         </li>
         <li>
-          <p>(99) 99999-99999</p>
+          <a href="tel:+55 (99) 98480-2874">(99) 98480-2874</a>
         </li>
       </ul>
 
       <div class="cadastro-redes">
         <div>
-          <img src="./assets/img/instagram-p.svg" alt="">
+          <a href="https://instagram.com/zoe_express_?igshid=MWQ2ODkyMjM=" target="_blank"><img src="./assets/img/instagram-p.svg" alt=""></a>
+
         </div>
 
         <div>
-          <img src="./assets/img/facebook-p.svg">
+          <a href="https://www.facebook.com/profile.php?id=100091350879681&mibextid=LQQJ4d" target="_blank"><img src="./assets/img/facebook-p.svg"></a>
+
         </div>
 
         <div>
-          <img src="./assets/img/whatsapp.svg">
+          <a href="https://wa.me/5599984802874" target="_blank"><img src="./assets/img/whatsapp.svg"></a>
+          
         </div>
       </div>
 
     </div>
     <form class="cadastro-form cor-10" action="">
-      <div class="cadastro-item">
+      <div data-fazer-pedido class="cadastro-item">
         <h3 class="font-1-m-b">1. Dados do Rementente.</h3>
         <div class="col">
           <label for="name">Nome completo</label>
@@ -103,8 +107,8 @@
         </div>
 
         <div class="col">
-          <label for="completo">Complemento</label>
-          <input type="email" id="completo">
+          <label for="complemento">Complemento</label>
+          <input type="email" id="complemento">
 
         </div>
 
@@ -112,10 +116,13 @@
           <label for="cidade-remetente">Cidade</label>
           <select id="cidade-remetente">
             <option value="">Escolha sua cidade</option>
-            <option value="Bacabal">Bacabal</option>
-            <option value="Lago da Pedra">Lago da Pedra</option>
-            <option value="São Mateus">São Mateus</option>
-            <option value="Bom Lugar">Bom Lugar</option>
+            <option value="bacabal">Bacabal</option>
+            <option value="lago-da-pedra">Lago da Pedra</option>
+            <option value="sao-mateus">São Mateus</option>
+            <option value="bom-lugar">Bom Lugar</option>
+            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
+            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
+            <option value="lago-verde">Lago Verde</option>
           </select>
         </div>
 
@@ -130,7 +137,7 @@
         <button class="btn proximo col">Próximo</button>
       </div>
 
-      <div class="cadastro-item">
+      <div data-fazer-pedido class="cadastro-item">
         <h3 class="font-1-m-b">2. Dados do Destinatário.</h3>
         <div class="col">
           <label for="name">Nome completo</label>
@@ -160,10 +167,13 @@
           <label for="cidade-destinatario">Cidade</label>
           <select id="cidade-destinatario">
             <option value="">Escolha sua cidade</option>
-            <option value="Bacabal">Bacabal</option>
-            <option value="Lago da Pedra">Lago da Pedra</option>
-            <option value="São Mateus">São Mateus</option>
-            <option value="Bom Lugar">Bom Lugar</option>
+            <option value="bacabal">Bacabal</option>
+            <option value="lago-da-pedra">Lago da Pedra</option>
+            <option value="sao-mateus">São Mateus</option>
+            <option value="bom-lugar">Bom Lugar</option>
+            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
+            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
+            <option value="lago-verde">Lago Verde</option>
           </select>
         </div>
 
@@ -177,31 +187,83 @@
 
   </section>
 
-  <footer class="footer-bg cor-00">
+  <footer class="footer-bg cor-05">
     <div class="container footer font-2-l">
       <div>
         <img src="./assets/img/zoe-express.svg" alt="">
       </div>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale conosco</a></li>
-          <li><a href="">Rastreio</a></li>
-          <li><a href="">Pedidos</a></li>
-          <li><a href="">Cadastro</a></li>
+          <li><a href="./contato.html">Fale conosco</a></li>
+          <li><a href="./rastreio.html">Rastreio</a></li>
+          <li><a href="./fazer-pedido.html">Pedidos</a></li>
+          <li><a href="./simular-valores.html">Simular Valores</a></li>
         </ul>
       </nav>
       <nav class="footer-nav">
         <ul>
-          <li><a href="">Fale conosco</a></li>
-          <li><a href="">Rastreio</a></li>
-          <li><a href="">Pedidos</a></li>
-          <li><a href="">Cadastro</a></li>
+          <li><a href="./contato.html">Fale conosco</a></li>
+          <li><a href="./rastreio.html">Rastreio</a></li>
+          <li><a href="./fazer-pedido.html">Pedidos</a></li>
+          <li><a href="./simular-valores.html">Simular Valores</a></li>
         </ul>
       </nav>
     </div>
 
   </footer>
-  <script type="module" src="./assets/js/index.js"></script>
+  <div class="menu-mobile">
+    <div class="header-menu-mobile">
+      <a href="./dist/index.html"><img src="./assets/img/zoe-express-preto.svg" alt=""></a>
+      <button class="btn-mobile-fechar" id="btn-mobile-fechar">
+        <img src="./assets/img/close-button.svg" alt="">
+      </button>
+    </div>
+    <nav>
+
+      <ul class="cor-p5 font-1-xl">
+        <li><a href="./rastreio.html">Rastreio</a></li>
+        <li><a href="./contato.html">Contato</a></li>
+        <li><a href="./simular-valores.html">Simular Valores</a></li>
+        <li><a href="./fazer-pedido.html">Fazer Pedido</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!DOCTYPE html>
+  <html lang="pt-br">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Termos de Uso - ZOE Express</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="Logo da ZOE Express">
+      </div>
+    </header>
+    <main>
+      <h1>Termos de Uso</h1>
+      <p>Esses termos e condições ("Termos", "Acordo") governam o uso do site da ZOE Express ("Serviço") operado pela ZOE Express ("nós", "nós" ou "nosso").</p>
+      <h2>Conteúdo</h2>
+      <p>Nosso serviço permite que você publique, vincule, armazene, compartilhe e disponibilize determinadas informações, textos, gráficos, vídeos ou outros materiais ("Conteúdo"). Você é responsável pelo Conteúdo que postar em nosso Serviço, incluindo sua legalidade, confiabilidade e adequação.</p>
+      <h2>Links para outros sites</h2>
+      <p>Nosso Serviço pode conter links para sites ou serviços de terceiros que não são de propriedade ou controlados pela ZOE Express. Não temos controle sobre o conteúdo, políticas de privacidade ou práticas de sites ou serviços de terceiros e não assumimos nenhuma responsabilidade por eles.</p>
+      <h2>Terminação</h2>
+      <p>Podemos rescindir ou suspender imediatamente o acesso ao nosso Serviço, sem aviso prévio ou responsabilidade, por qualquer motivo, incluindo, sem limitação, se você violar os Termos.</p>
+    </main>
+    <footer>
+      <ul>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </footer>
+  </body>
+
+  </html>
+
+  <script src="./dist/bundle.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 function teste() {
   async function fetchDados() {
     try {
-      const fetchApi = await fetch(`http://localhost:8080/client`);
+      const fetchApi = await fetch(`https://zoe-production-4a9e.up.railway.app/signup/recipients`);
       const fetchDados = await fetchApi.json();
       return fetchDados;
     } catch (error) {

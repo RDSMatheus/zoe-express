@@ -3,11 +3,14 @@
 @import "./assets/css/nav.css";
 @import "./assets/css/componentes.css";
 @import "./assets/css/tipografia.css";
+@import "./assets/css/keyframes.css";
 
 @import "./assets/css/home.css";
 @import "./assets/css/cadastro.css";
-@import "./assets/css/pedidos.css";
 @import "./assets/css/footer.css";
 @import "./assets/css/rastreio.css";
+@import "./assets/css/rastreio-container.css";
 @import "./assets/css/valores.css";
+@import "./assets/css/menu-mobile.css";
+@import "./assets/css/slide-in.css";
 
