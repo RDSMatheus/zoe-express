@@ -1,0 +1,11 @@
+{
+  "builds": [
+    {
+      "src": "webpack.config.js",
+      "use": "@now/static-build",
+      "config": {
+        "installCommand": "npm install"
+      }
+    }
+  ]
+}
