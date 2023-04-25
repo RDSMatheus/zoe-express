@@ -1,7 +1,15 @@
 {
-  "builds": [{ "src": "webpack.config.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
