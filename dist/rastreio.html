@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>ZOÉ | Valores</title>
+  <title>ZOÉ | Pedido</title>
   </title>
   <link rel="shortcut icon" href="./assets/img/detalhe-ico.ico" width="16" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,42 +32,13 @@
     </div>
   </header>
 
-  <section class="valores-bg">
-    <div class="container">
-      <h3 class="font-1-xxl cor-12">Confira os valores.</h3>
-      <div class="valores" data-anime="slide-left">
-        <form class="valores-dados cor-00 font-1-l" data-form='simular-valor'>
-          <label for="cidade-destinatario">Cidade do Destinatário</label>
-          <select name="cidades-destinario" id="cidade-destinatario">
-            <option value="">Escolha sua cidade</option>
-            <option value="bacabal">Bacabal</option>
-            <option value="lago-da-pedra">Lago da Pedra</option>
-            <option value="sao-mateus">São Mateus</option>
-            <option value="bom-lugar">Bom Lugar</option>
-            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
-            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
-            <option value="lago-verde">Lago Verde</option>
-          </select>
-          <label for="cidade-remetente">Cidade do Rementente</label>
-          <select name="cidades-remetente" id="cidade-remetente">
-            <option value="">Escolha sua cidade</option>
-            <option value="bacabal">Bacabal</option>
-            <option value="lago-da-pedra">Lago da Pedra</option>
-            <option value="sao-mateus">São Mateus</option>
-            <option value="bom-lugar">Bom Lugar</option>
-            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
-            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
-            <option value="lago-verde">Lago Verde</option>
-          </select>
-          <button class="btn" id="btn-consultar-valor">Consultar</button>
-        </form>
-        <div><img src="./assets/img/delivery-map.webp" alt="Caminhão com um mapa e pontos de entrega"></div>
-
-      </div>
-
+  <form class="rastreio-bg" data-form='rastreio'>
+    <div class="container rastreio font-1-l cor-02" data-anime="slide-up">
+      <label for="ratreio">Insira seu código de rastreio:</label>
+      <input type="text" id="rastreio">
+      <button class="btn" id="btn-rastreio">Consultar</button>
     </div>
-  </section>
-
+  </form>
 
   <footer class="footer-bg cor-05">
     <div class="container footer font-2-l">
@@ -111,8 +82,21 @@
     </nav>
   </div>
 
-  <script src="./dist/bundle.js"></script>
+  <div data-rastreio class="rastreio-modal">
+    <div class="rastreio-container" data-anime="slide-up">
+      <h3 class="font-1-xl cor-11">Confira o rastreio do seu produto.</h3>
+      <button class="btn-rastreio-fechar" id="btn-rastreio-fechar">
+        <img src="./assets/img/close-button.svg" alt="">
+      </button>
+      <ul class="rastreio-status">
+        <li><img src="./assets/img/email.svg" alt=""></li>
+        <li><img src="./assets/img/email.svg" alt=""></li>
+        <li><img src="./assets/img/email.svg" alt=""></li>
+      </ul>
+    </div>
+  </div>
 
+  <script src="./bundle.js"></script>
 
 </body>
 
