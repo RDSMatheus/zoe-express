@@ -18,7 +18,10 @@
     {
       "src": "/(.*)",
       "dest": "/dist/$1",
-      "condition": {"not": {"file": "dist/index.html"}}
+      "condition": { "not": { "file": "dist/index.html" } }
     }
-  ]
+  ],
+  "mime": {
+    "text/css": ["css"]
+  }
 }
