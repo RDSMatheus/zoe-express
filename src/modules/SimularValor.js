@@ -17,13 +17,11 @@ export default class SimularValores {
       img.className = 'rotate-image';
       this.container.appendChild(img);
       try {
-        console.log(this.form[0].value);
-        console.log('olá');
-        const dadosJson = await fetchDados(
+        const dadosFetch = await fetchDados(
           'https://zoe-production-4a9e.up.railway.app/product',
           'GET',
         );
-        console.log(dadosJson);
+        const dadosJson = await dadosFetch.json()
         return dadosJson;
       } catch (error) {
         console.log(error);
@@ -56,7 +54,7 @@ export default class SimularValores {
       const select2 = this.form[1].value.toLowerCase();
 
       let value = null;
-
+      console.log(select1, select2)
       if (dadosJson) {
         dadosJson.forEach((item) => {
           const [origem, destino] = item.name.toLowerCase().split('x');

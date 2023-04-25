@@ -8,9 +8,11 @@ export default async function fetchDados(
   if (body) options.body = JSON.stringify(body);
   try {
     const response = await fetch(url, options);
+    console.log(response);
     if (!response.ok) {
       throw new Error(`Erro ao buscar dados: ${response.status}`);
     }
+    return response;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Erro ao buscar dados:', error);

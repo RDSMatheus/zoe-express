@@ -1,15 +1,13 @@
 function teste() {
-  async function fetchDados() {
-    try {
-      const fetchApi = await fetch(`https://zoe-production-4a9e.up.railway.app/signup/recipients`);
-      const fetchDados = await fetchApi.json();
-      return fetchDados;
-    } catch (error) {
-      console.log('yuri é bicha');
-    }
-  }
-  
-  //deleta um cliente do banco de dados
+  const url = 'https://zoe-production-4a9e.up.railway.app/contact';
+  const username = prompt();
+  const password = prompt();
+
+  const headers = new Headers();
+
+  headers.set('Content-Type', 'application/json');
+  headers.set('Authorization', `Basic ${btoa(`${username} : ${password}`)}`);
+
   function deleteUser(id, usuario) {
     const confirmar = confirm(
       `Tem certeza que deseja deletar o usuário ${usuario}?`,
@@ -21,7 +19,7 @@ function teste() {
     }
   }
 
-  //cria uma ul pra cada cliente
+  // cria uma ul pra cada cliente
   function exibirClientes(cliente) {
     const listaClientes = document.querySelector('#lista-clientes');
     const ul = document.createElement('ul');
@@ -45,7 +43,10 @@ function teste() {
 
   // Chamando a função para exibir os clientes quando a página é carregada
   window.addEventListener('load', () => {
-    fetchDados().then((clientes) => {
+    fetch(url, {
+      method: 'GET',
+      headers,
+    }).then((clientes) => {
       clientes.forEach((cliente) => {
         exibirClientes(cliente);
       });
