@@ -1,4 +1,4 @@
-export default function fetchDados(
+export default async function fetchDados(
   url,
   method = 'GET',
   headers = {},
@@ -6,17 +6,14 @@ export default function fetchDados(
 ) {
   const options = { method, headers };
   if (body) options.body = JSON.stringify(body);
-
-  return fetch(url, options)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Erro ao buscar dados: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.error('Erro ao buscar dados:', error);
-      throw error;
-    });
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar dados: ${response.status}`);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Erro ao buscar dados:', error);
+    throw error;
+  }
 }

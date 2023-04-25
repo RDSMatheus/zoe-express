@@ -47,6 +47,7 @@ input + label {
 }
 input[type="text"],
 input[type="email"],
+input[type="number"],
 textarea,
 select{
   width: 100%;
@@ -54,13 +55,19 @@ select{
   padding: 10px;
   border-radius: 4px;
   background-color: var(--cor-02);
+  font: 400 1.125rem/1.35 "Poppins", sans-serif;
 }
+
 input:focus-visible,
 textarea:focus-visible{
   box-shadow: 0 0 5px var(--cor-p2);
   background-color: var(--cor-00);
   border: none;
   outline: none;
+}
+
+input.erro{
+  box-shadow: 0 0 5px red;
 }
 
 .col{
@@ -70,3 +77,5 @@ textarea:focus-visible{
 .rotate-image{
   animation: rotation 2s linear infinite;
 }
+
+

@@ -35,9 +35,7 @@ export default class SimularValores {
   }
 
   createDiv(valor) {
-    const divAnterior =
-      this.container.querySelector('.valores-popup-error') ||
-      this.container.querySelector('.valores-popup');
+    const divAnterior = this.container.querySelector('.valores-popup');
     if (divAnterior) {
       this.container.removeChild(divAnterior);
     }

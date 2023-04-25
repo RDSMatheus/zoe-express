@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <title>ZOÉ | Contato</title>
+  </title>
+  <link rel="shortcut icon" href="./assets/img/detalhe-ico.ico" width="16" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,29 +80,24 @@
         <h3 class="font-1-m-b">1. Preencha o formulário.</h3>
         <div class="col">
           <label for="nome-contato">Nome completo</label>
-          <input type="text" id="nome-contato" name="nome-contato" required>
-        </div>
-
-        <div>
-          <label for="cel-contato">Telefone</label>
-          <input type="text" id="cel-contato" name="cel-contato" required>
-        </div>
-
-        <div>
-          <label for="email-contato">Email</label>
-          <input type="email" id="email-contato" name="email-contato" required>
-
+          <input type="text" id="nome-contato" name="fullName" required>
         </div>
 
         <div class="col">
+          <label for="cel-contato">Telefone</label>
+          <input type="text" id="cel-contato" name="phone" required>
+        </div>
+
+
+        <div class="col">
           <label for="produto">Qual a sua dúvida:</label>
-          <textarea name="produto" id="produto-contato" rows="10"></textarea>
+          <textarea name="doubt" id="produto-contato" rows="10"></textarea>
 
         </div>
 
 
 
-        <button class="btn col">Enviar</button>
+        <button class="btn col" id="enviar-contato">Enviar</button>
       </div>
 
     </form>

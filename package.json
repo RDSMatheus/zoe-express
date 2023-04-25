@@ -35,6 +35,7 @@
     "ansi-styles": "^4.3.0",
     "argparse": "^2.0.1",
     "balanced-match": "^1.0.2",
+    "base-64": "^1.0.0",
     "boolbase": "^1.0.0",
     "brace-expansion": "^1.1.11",
     "browserslist": "^4.21.5",
