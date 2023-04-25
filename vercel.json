@@ -1,15 +1,6 @@
 {
-  "entry": "./src/index.js",
-  "output": {
-    "filename": "bundle.js",
-    "path": "./dist"
-  },
-  "module": {
-    "rules": [{}]
-  },
-
   "version": 2,
-  "builds": [{ "src": "src/index.js", "use": "@vercel/static-build" }],
+  "builds": [{ "src": "webpack.config.js", "use": "@vercel/static-build" }],
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
