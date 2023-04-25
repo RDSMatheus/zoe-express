@@ -10,6 +10,15 @@
     {
       "src": "/(.*)",
       "dest": "/dist/index.html"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/dist/css/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1",
+      "condition": {"not": {"file": "dist/index.html"}}
     }
   ]
 }
