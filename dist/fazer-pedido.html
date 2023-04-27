@@ -78,122 +78,126 @@
       </div>
 
     </div>
-    <section class="cadastro-form cor-10">
+    <section class="cadastro-form">
+      <form class="cor-10" method="post">
+        <div data-fazer-pedido="sender" class="cadastro-item">
+          <h3 class="font-1-m-b">1. Dados do Rementente.</h3>
+          <div class="col">
+            <label for="name">Nome Completo</label>
+            <input type="text" class="cpf" id="name" name="fullName" required placeholder="Nome Completo">
+          </div>
 
-      <form data-fazer-pedido class="cadastro-item" data-form='senders'>
-        <h3 class="font-1-m-b">1. Dados do Rementente.</h3>
-        <div class="col">
-          <label for="name">Nome completo</label>
-          <input type="text" class="cpf" id="name" name="fullName" required placeholder="Nome Completo">
-        </div>
+          <div>
+            <label for="cpf">CPF/CNPJ</label>
+            <input type="text" id="cpf" name="cpf" required placeholder="999.999.999-99">
+          </div>
 
-        <div>
-          <label for="cpf">CPF/CNPJ</label>
-          <input type="text" id="cpf" name="cpf" required placeholder="999.999.999-99">
-        </div>
+          <div>
+            <label for="cel">Telefone</label>
+            <input type="text" id="cel" name="phone" required placeholder="99 99999-9999">
+          </div>
 
-        <div>
-          <label for="cel">Telefone</label>
-          <input type="text" id="cel" name="phone" required placeholder="99 99999-9999">
-        </div>
+          <div class="col">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="mail" required placeholder="email@email.com">
 
-        <div class="col">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="mail" required placeholder="email@email.com">
+          </div>
 
-        </div>
+          <div class="col">
+            <label for="endereco">Endereço Completo</label>
+            <input type="text" id="endereco" name="address" required placeholder="Rua Logo Ali, Bairro Bem Ali, 99">
 
-        <div class="col">
-          <label for="endereco">Endereço Completo</label>
-          <input type="text" id="endereco" name="adress" required placeholder="Rua Logo Ali, Bairro Bem Ali, 99">
+          </div>
 
-        </div>
+          <div class="col">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="addressLine2">
 
-        <div class="col">
-          <label for="complemento">Complemento</label>
-          <input type="text" id="complemento" name="adressLine2">
+          </div>
 
-        </div>
+          <div class="col">
+            <label for="cidade-remetente">Cidade</label>
+            <select id="cidade-remetente" name="city" required>
+              <option value="" disabled>Escolha sua cidade</option>
+              <option value="bacabal">Bacabal</option>
+              <option value="lago-da-pedra">Lago da Pedra</option>
+              <option value="sao-mateus">São Mateus</option>
+              <option value="bom-lugar">Bom Lugar</option>
+              <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
+              <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
+              <option value="lago-verde">Lago Verde</option>
+            </select>
+          </div>
 
-        <div class="col">
-          <label for="cidade-remetente">Cidade</label>
-          <select id="cidade-remetente" name="city" required>
-            <option value="" disabled>Escolha sua cidade</option>
-            <option value="bacabal">Bacabal</option>
-            <option value="lago-da-pedra">Lago da Pedra</option>
-            <option value="sao-mateus">São Mateus</option>
-            <option value="bom-lugar">Bom Lugar</option>
-            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
-            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
-            <option value="lago-verde">Lago Verde</option>
-          </select>
-        </div>
+          <div class="col">
+            <label for="produto">Descreva o produto:</label>
+            <textarea name="productDescription" id="produto" rows="10" required></textarea>
 
-        <div class="col">
-          <label for="produto">Descreva o produto:</label>
-          <textarea name="produto" id="produto" rows="10" name="productDescription" required></textarea>
+          </div>
 
-        </div>
-
-
-
-        <button id="cadastrar-remetente" class="btn proximo col">Próximo</button>
-
-      </form>
-
-      <form data-fazer-pedido class="cadastro-item" data-form='recipients'>
-        <h3 class="font-1-m-b">2. Dados do Destinatário.</h3>
-        <div class="col">
-          <label for="name">Nome completo</label>
-          <input type="text" id="name" name="fullName" required>
-        </div>
-
-        <div class="col">
-          <label for="endereco">Endereço Completo</label>
-          <input type="text" id="endereco" name="adress" required>
+          <button class="btn proximo col">Próximo</button>
 
         </div>
 
-        <div>
-          <label for="complemento">Complemento</label>
-          <input type="text" id="complemento" name="adressLine2">
+        <div data-fazer-pedido="recipient" class="cadastro-item">
+          <h3 class="font-1-m-b">2. Dados do Destinatário.</h3>
+          <div class="col">
+            <label for="name">Nome completo</label>
+            <input type="text" id="name" name="fullName" required>
+          </div>
 
+          <div class="col">
+            <label for="endereco">Endereço Completo</label>
+            <input type="text" id="endereco" name="address" required>
+
+          </div>
+
+          <div>
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="addressLine2">
+
+          </div>
+
+          <div>
+            <label for="cel">Telefone</label>
+            <input type="text" id="cel" name="phone" required>
+          </div>
+
+
+
+          <div class="col">
+            <label for="cidade-destinatario">Cidade</label>
+            <select id="cidade-destinatario" name="city">
+              <option value="">Escolha sua cidade</option>
+              <option value="bacabal">Bacabal</option>
+              <option value="lago-da-pedra">Lago da Pedra</option>
+              <option value="sao-mateus">São Mateus</option>
+              <option value="bom-lugar">Bom Lugar</option>
+              <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
+              <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
+              <option value="lago-verde">Lago Verde</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <input type="checkbox" name="termos" id="termos">
+            <label for="termos"><a class="link" id="abrir-termos">Termos e Condições</a></label>
+          </div>
+
+
+          <button class="btn anterior col">Voltar</button>
+          <button class="btn cadastrar col">Cadastrar</button>
         </div>
 
-        <div>
-          <label for="cel">Telefone</label>
-          <input type="text" id="cel" name="phone" required>
-        </div>
-
-
-
-        <div class="col">
-          <label for="cidade-destinatario">Cidade</label>
-          <select id="cidade-destinatario" name="city">
-            <option value="">Escolha sua cidade</option>
-            <option value="bacabal">Bacabal</option>
-            <option value="lago-da-pedra">Lago da Pedra</option>
-            <option value="sao-mateus">São Mateus</option>
-            <option value="bom-lugar">Bom Lugar</option>
-            <option value="conceicao-do-lago-acu">Conceição do Lago Acú</option>
-            <option value="sao-luis-gonzaga">São Luiz Gonzaga</option>
-            <option value="lago-verde">Lago Verde</option>
-          </select>
-        </div>
-
-        <div class="col">
-          <input type="checkbox" name="termos" id="termos">
-          <label for="termos"><a class="link" id="abrir-termos">Termos e Condições</a></label>
-        </div>
-
-        <button id="cadastrar-destinatario" class="btn col">Cadastrar</button>
       </form>
       <ul class="cadastro-nav">
         <li class="cadastro-nav-item"><span></span></li>
         <li class="cadastro-nav-item"><span></span></li>
       </ul>
-
     </section>
+
+
+
   </section>
 
   <footer class="footer-bg cor-05">

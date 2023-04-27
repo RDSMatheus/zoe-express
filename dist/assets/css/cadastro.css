@@ -53,14 +53,14 @@
 }
 
 .cadastro-form h3::before{
-  content: url("../img/zoe-express.svg");
-  width: 10px;
-  height: 10px;
+  content: url("../img/detalhe.svg");
+  width: 40px;
+  height: 40px;
   display: block;
   position: absolute;
   z-index: -1;
   left: -45px;
-  top: -20px;
+  top: -45px;
 }
 
 .cadastro-item{
@@ -80,7 +80,7 @@
 }
 
 .cadastro-nav{
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   display: flex; 
   place-self: center;
@@ -125,6 +125,9 @@
     grid-template-columns: 1fr;
     background-color: var(--cor-00);
     border-radius: 0 0 5px 5px;
+  }
+  .cadastro-item{
+    grid-template-columns: 1fr;
   }
   .cadastro-redes{
     justify-content: start;

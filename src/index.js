@@ -4,6 +4,7 @@ import SlideIn from './modules/SlideIn';
 import SimularValor from './modules/SimularValor';
 import EnviarFormulario from './modules/EnviarFormulario';
 import FormWizard from './modules/FormWizard';
+import FormCarousel from './modules/Carousel';
 
 const menuMobile = new FixedContainer(
   '#btn-menu-mobile',
@@ -11,6 +12,14 @@ const menuMobile = new FixedContainer(
   '#btn-mobile-fechar',
 );
 menuMobile.init();
+
+const proximo = new FormCarousel(
+  '[data-fazer-pedido]',
+  '.btn.proximo',
+  '.btn.anterior',
+  '.cadastro-nav-item',
+);
+proximo.init();
 
 // container de rastreio
 const containerRastreio = new FixedContainer(
@@ -55,4 +64,3 @@ const formMultiStep = new FormWizard(
   '.cadastro-nav-item',
 );
 formMultiStep.init();
-

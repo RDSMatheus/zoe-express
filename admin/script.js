@@ -1,7 +1,7 @@
 function teste() {
-  const url = 'https://zoe-production-4a9e.up.railway.app/contact';
-  const username = prompt();
-  const password = prompt();
+  const url = 'https://zoe-production-4a9e.up.railway.app/order';
+  const username = 'admin';
+  const password = 'senha';
 
   const headers = new Headers();
 
@@ -13,7 +13,7 @@ function teste() {
       `Tem certeza que deseja deletar o usuário ${usuario}?`,
     );
     if (confirmar) {
-      fetch(`http://localhost:8080/client/${id}`, {
+      fetch(`${url}/${id}`, {
         method: 'DELETE',
       }).then(() => location.reload());
     }
@@ -47,6 +47,7 @@ function teste() {
       method: 'GET',
       headers,
     }).then((clientes) => {
+      console.log(clientes);
       clientes.forEach((cliente) => {
         exibirClientes(cliente);
       });

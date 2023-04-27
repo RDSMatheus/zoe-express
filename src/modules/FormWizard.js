@@ -10,7 +10,7 @@ export default class FormWizard {
     if (this.currentForm) {
       this.cpfInput = this.currentForm.querySelector('input[name="cpf"]');
     }
-
+    
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -45,7 +45,7 @@ export default class FormWizard {
     this.currentForm.appendChild(img);
     try {
       await fetchDados(
-        `https://zoe-production-4a9e.up.railway.app/${this.currentForm.dataset.form}`,
+        `https://zoe-production-4a9e.up.railway.app/order`,
         'POST',
         { 'Content-Type': 'application/json' },
         formJson,
