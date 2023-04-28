@@ -39,3 +39,14 @@
     transform: rotate(359deg);
   }
 }
+
+@keyframes growUp {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to{
+    opacity: 1;
+    max-height: max-content;
+  }
+}

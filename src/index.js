@@ -5,6 +5,7 @@ import SimularValor from './modules/SimularValor';
 import Formulario from './modules/Formulario';
 import FormWizard from './modules/FormWizard';
 import FormCarousel from './modules/Carousel';
+import Accordion from './modules/Accordion';
 
 const menuMobile = new FixedContainer(
   '#btn-menu-mobile',
@@ -58,3 +59,6 @@ navFixed.init();
 
 const anime = new SlideIn('[data-anime]');
 anime.init();
+
+const accordion = new Accordion('[data-accordion] dt');
+accordion.init();

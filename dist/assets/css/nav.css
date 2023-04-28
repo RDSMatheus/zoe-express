@@ -2,7 +2,7 @@
   background-color: var(--cor-12);
   box-shadow: 0px 2px 0px var(--cor-p1);
   position: relative;
-  z-index: 9999;
+  z-index: 99999;
 }
 
 .navegacao-bg.ativo{
