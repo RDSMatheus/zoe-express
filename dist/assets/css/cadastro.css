@@ -77,6 +77,7 @@
 .cadastro-item.ativo{
   display: grid;
   animation: animeLeft .3s forwards;
+  margin-bottom: 40px;
 }
 
 .cadastro-nav{
