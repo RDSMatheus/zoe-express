@@ -5,10 +5,11 @@ export default class Accordion {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick({target}) {
-    const element = target
+  handleClick({ target }) {
+    const element = target;
+    element.classList.toggle('ativo');
     element.nextElementSibling.classList.toggle('ativo');
-    console.log("clicou")
+    console.log('clicou');
   }
 
   addEventListeners() {

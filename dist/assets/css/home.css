@@ -97,6 +97,23 @@
   cursor: pointer;
   margin-bottom: 10px;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.perguntas dt::after{
+  content: url("../img/arrow.svg");
+  display: block;
+  border-radius: 50%;
+  padding: 10px 16px;
+}
+.perguntas dt.ativo::after{
+  rotate: 180deg;
+  transition: .3s ease-in-out;
+}
+
+.perguntas dt:hover::after{
+  background-color: var(--cor-10);
 }
 
 .perguntas dd{
