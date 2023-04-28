@@ -1,5 +1,5 @@
 import fetchDados from './fetchDados';
-import Formulario from './EnviarFormulario';
+import Formulario from './Formulario';
 
 export default class FormWizard {
   constructor(forms, nav) {

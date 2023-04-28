@@ -2,7 +2,7 @@ import FixedContainer from './modules/FixedContainer';
 import NavFixed from './modules/NavFixed';
 import SlideIn from './modules/SlideIn';
 import SimularValor from './modules/SimularValor';
-import EnviarFormulario from './modules/EnviarFormulario';
+import Formulario from './modules/Formulario';
 import FormWizard from './modules/FormWizard';
 import FormCarousel from './modules/Carousel';
 
@@ -14,7 +14,7 @@ const menuMobile = new FixedContainer(
 menuMobile.init();
 
 const proximo = new FormCarousel(
-  '[data-fazer-pedido]',
+  '.cadastro-form form',
   '.btn.proximo',
   '.btn.anterior',
   '.cadastro-nav-item',
@@ -44,7 +44,7 @@ const simularValor = new SimularValor(
 simularValor.init();
 
 const headersContato = { 'Content-Type': 'application/json' };
-const enviarContato = new EnviarFormulario(
+const enviarContato = new Formulario(
   '#enviar-contato',
   "[data-form='contato']",
   'https://zoe-production-4a9e.up.railway.app/contact',
@@ -58,9 +58,3 @@ navFixed.init();
 
 const anime = new SlideIn('[data-anime]');
 anime.init();
-
-const formMultiStep = new FormWizard(
-  '[data-fazer-pedido]',
-  '.cadastro-nav-item',
-);
-formMultiStep.init();

@@ -1,20 +1,20 @@
-import Formulario from './EnviarFormulario';
+import Formulario from './Formulario';
 import fetchDados from './fetchDados';
 
 export default class FormCarousel {
   constructor(form, proximo, anterior, nav) {
-    this.form = document.querySelectorAll(form);
+    this.form = document.querySelector(form);
     this.proximo = document.querySelector(proximo);
     this.anterior = document.querySelector(anterior);
     this.nav = document.querySelectorAll(nav);
     this.activeClass = 'ativo';
     this.index = 0;
-    this.currentForm = this.form[this.index];
     this.currentNav = this.nav[this.index];
-    if (this.currentForm) {
+    if (this.form) {
+      this.currentForm = this.form.children[this.index];
       this.cpfInput = this.currentForm.querySelector('#cpf');
       this.email = this.currentForm.querySelector('#email');
-      this.cel = this.currentForm.querySelector('input[name="phone"]');
+      this.cel = this.form.querySelectorAll('input[name="phone"]');
     }
 
     this.handleClickNext = this.handleClickNext.bind(this);
@@ -23,8 +23,9 @@ export default class FormCarousel {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();
-    console.log('olá');
+    event.preventDefault()
+    console.log('handlesubmit');
+
     const sender = {};
     const recipient = {};
     const senderInputs = document.querySelectorAll(
@@ -47,20 +48,13 @@ export default class FormCarousel {
 
     const termos = document.querySelector('#termos');
 
-    const celSenders = document.querySelector("#cel")
-    celSenders.value = Formulario.formatarTelefone(celSenders.value)
-    console.log(celSenders.value)
-    if (termos) {
-      console.log(!termos.checked)
-      if (!termos.checked) {
-        alert('Leia os termos de serviço!');
-        return;
-      }
+    if (termos && !termos.checked) {
+      termos.classList.add("erro")
+      return;
     }
 
-    if (Formulario.validarTelefone(celSenders.value)) {
-      console.log("oláaaaa")
-      alert('Insira um telefone válido');
+    if (!Formulario.validarTelefone(this.cel[this.index].value)) {
+      termos.classList.add("erro")
       return;
     }
 
@@ -74,12 +68,19 @@ export default class FormCarousel {
         'POST',
         { 'Content-Type': 'application/json' },
         formJson,
-      );
+      ).then((response) => {
+        if (!response.ok) {
+          console.log(this.currentForm);
+          this.currentForm.innerHTML = `<p>${response.ok}</p>`;
+        }
+        console.log('foi');
+      });
 
-      this.limparInput();
     } catch (error) {
       console.error(error);
+      this.currentForm.innerHTML = `<p>deu erro ${error}<p>`
     } finally {
+      this.limparInput();
       this.currentForm.removeChild(img);
     }
   }
@@ -103,27 +104,35 @@ export default class FormCarousel {
       return;
     }
 
-    if (!Formulario.validarTelefone(this.cel.value)) {
+    if (!Formulario.validarTelefone(this.cel[this.index].value)) {
       alert('Insira um telefone válido');
       return;
     }
 
-    if (this.index < this.form.length - 1) {
+    if (this.index <= (this.form.length - 1)) {
       this.index += 1;
       console.log(this.index);
-      this.form.forEach((item) => item.classList.remove(this.activeClass));
-      this.currentForm = this.form[this.index];
+      // this.form.forEach((item) => item.classList.remove(this.activeClass));
+      const { children } = this.form;
+      for (let i = 0; i < children.length; i += 1) {
+        const item = children[i];
+        item.classList.remove(this.activeClass);
+      }
+      this.currentForm = this.form.children[this.index];
       this.currentForm.classList.add(this.activeClass);
 
       this.nav.forEach((item) => item.classList.remove(this.activeClass));
       this.currentNav = this.nav[this.index];
       this.currentNav.classList.add(this.activeClass);
 
-      if (this.index === this.form.length - 1) {
-        const lastForm = this.currentForm.querySelector('.btn.cadastrar');
-        lastForm.addEventListener('click', this.handleSubmit);
+      console.log(this.form);
+
+      if (this.index === this.form.children.length - 1) {
+        this.form.addEventListener('submit', this.handleSubmit);
       }
     }
+
+    this.addEventListeners(this.index);
   }
 
   handleClickPrev(event) {
@@ -131,8 +140,12 @@ export default class FormCarousel {
     if (this.index >= 0) {
       this.index -= 1;
       console.log(this.index);
-      this.form.forEach((item) => item.classList.remove(this.activeClass));
-      this.currentForm = this.form[this.index];
+      const { children } = this.form;
+      for (let i = 0; i < children.length; i += 1) {
+        const item = children[i];
+        item.classList.remove(this.activeClass);
+      }
+      this.currentForm = this.form.children[this.index];
       this.currentForm.classList.add(this.activeClass);
 
       this.nav.forEach((item) => item.classList.remove(this.activeClass));
@@ -163,13 +176,6 @@ export default class FormCarousel {
     }
   }
 
-  formatarCel(value) {
-    if (value.length > 13) {
-      value = value.slice(0, 15);
-    }
-    this.cel.value = Formulario.formatarTelefone(value);
-  }
-
   limparInput() {
     const inputs = this.form.querySelectorAll('input, textarea');
     inputs.forEach((item) => {
@@ -178,21 +184,33 @@ export default class FormCarousel {
     });
   }
 
-  addButtonEvent() {
+  addEventListeners() {
     this.proximo.addEventListener('click', this.handleClickNext);
     this.anterior.addEventListener('click', this.handleClickPrev);
 
     this.cpfInput.addEventListener('input', () => {
       this.formatarCPForCPNJ(this.cpfInput.value);
     });
-    this.cel.addEventListener('input', () => {
-      this.formatarCel(this.cel.value);
+
+    // const inputCel = this.currentForm.querySelector("#cel");
+    // inputCel.addEventListener("input", (event)=>{
+    //   console.log(inputCel.value)
+    //   inputCel.value = this.formatarCel(event.target.value)
+
+    // })
+    this.cel.forEach((cel) => {
+      cel.addEventListener('input', (event) => {
+        console.log(this.cel[2]);
+        const phone = cel;
+        phone.value = Formulario.formatarTelefone(event.target.value);
+      });
     });
   }
 
   init() {
-    if (this.form.length) {
-      this.addButtonEvent();
+    if (this.form) {
+      console.log(this.form);
+      this.addEventListeners();
       this.currentForm.classList.add(this.activeClass);
       this.currentNav.classList.add(this.activeClass);
     }

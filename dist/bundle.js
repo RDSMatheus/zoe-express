@@ -1,1 +1,787 @@
-(()=>{"use strict";class t{constructor(t,e,r){this.abrir=document.querySelector(t),this.container=document.querySelector(e),this.fechar=document.querySelector(r),this.activeClass="ativo",this.toggleMenu=this.toggleMenu.bind(this)}toggleMenu(t){t.preventDefault(),this.container.classList.toggle(this.activeClass)}addEventListeners(){this.abrir.addEventListener("click",this.toggleMenu),this.fechar.addEventListener("click",this.toggleMenu)}init(){return this.abrir&&this.addEventListeners(),this}}async function e(t,e="GET",r={},i=null){const a={method:e,headers:r};i&&(a.body=JSON.stringify(i));try{const e=await fetch(t,a);if(console.log(e),!e.ok)throw new Error(`Erro ao buscar dados: ${e.status}`);return e}catch(t){throw console.error("Erro ao buscar dados:",t),t}}class r{constructor(t,e,r,i,a){this.button=document.querySelector(t),this.form=document.querySelector(e),this.url=r,this.method=i,this.headers=a,this.handleClick=this.handleClick.bind(this)}static formatarTelefone(t){return(t=(t=t.replace(/\D/g,"")).replace(/^(\d{2})(\d)/g,"($1) $2")).replace(/(\d)(\d{4})$/,"$1-$2")}static validarTelefone(t){let e=t;if(e=e.replace(/[^\d]+/g,""),10!==e.length&&11!==e.length)return!1;const r=e.substring(0,2);return!!["11","12","13","14","15","16","17","18","19","21","22","24","27","28","31","32","33","34","35","37","38","41","42","43","44","45","46","47","48","49","51","53","54","55","61","62","63","64","65","66","67","68","69","71","73","74","75","77","79","81","82","83","84","85","86","87","88","89","91","92","93","94","95","96","97","98","99"].includes(r)}static formatarCPF(t){return(t=(t=(t=t.replace(/\D/g,"")).replace(/^(\d{3})(\d)/,"$1.$2")).replace(/^(\d{3})\.(\d{3})(\d)/,"$1.$2.$3")).replace(/\.(\d{3})(\d)/,".$1-$2")}static formatarCNPJ(t){return(t=(t=(t=(t=t.replace(/\D/g,"")).replace(/^(\d{2})(\d)/,"$1.$2")).replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3")).replace(/\.(\d{3})(\d)/,".$1/$2")).replace(/(\d{4})(\d)/,"$1-$2")}static validarCNPJ(t){if(14!==(t=t.replace(/[^\d]+/g,"")).length)return!1;if("00000000000000"===t||"11111111111111"===t||"22222222222222"===t||"33333333333333"===t||"44444444444444"===t||"55555555555555"===t||"66666666666666"===t||"77777777777777"===t||"88888888888888"===t||"99999999999999"===t)return!1;let e=t.length-2,r=t.substring(0,e);const i=t.substring(e);let a=0,s=e-7;for(let t=e;t>=1;t--)a+=r.charAt(e-t)*s--,s<2&&(s=9);let n=a%11<2?0:11-a%11;if(n!==Number(i.charAt(0)))return!1;e+=1,r=t.substring(0,e),a=0,s=e-7;for(let t=e;t>=1;t--)a+=r.charAt(e-t)*s--,s<2&&(s=9);return n=a%11<2?0:11-a%11,n===Number(i.charAt(1))}static validarCPF(t){if(11!==(t=t.replace(/[^\d]+/g,"")).length)return!1;if(/^(\d)\1+$/.test(t))return!1;let e=0;for(let r=0;r<9;r+=1)e+=Number(t.charAt(r))*(10-r);let r=e%11,i=r<2?0:11-r;if(i!==Number(t.charAt(9)))return!1;e=0;for(let r=0;r<10;r+=1)e+=Number(t.charAt(r))*(11-r);return r=e%11,i=r<2?0:11-r,i===Number(t.charAt(10))}static validarEmail(t){return/(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i.test(t)}static erroValidacao(t,e){const r=document.createElement("span");return r.style.color="red",r.innerText=`Erro no ${e}`,t.insertAdjacentElement("afterend",r),r}limparInput(){this.form.querySelectorAll("input, textarea").forEach((t=>{t.value=""}))}async handleClick(t){t.preventDefault(),console.log(typeof this.form);const i=this.form.querySelector("input[name='cpf']"),a=this.form.querySelector("#email"),s=this.form.querySelector("#cel"),n=s?s.value:"";if(this.form.querySelector("input[name='fullName']").value.length<3)alert("Insira um nome valido");else if(!n||r.validarTelefone(n))if(!i||""===i.value||r.validarCPF(r.formatarCPF(i.value)))if(!a||""===a.value||r.validarEmail(a.value))if("GET"===this.method)e(this.url,this.method).then((t=>console.log(t)));else{const t=new FormData(this.form),r={};for(const[e,i]of t)r[e]=i;try{await e(this.url,this.method,this.headers,r),this.limparInput(),alert("Enviado!")}catch(t){console.log(t)}}else r.erroValidacao(n,"telefone");else r.erroValidacao(i,"cpf");else alert("Telefone inválido!")}addEventListeners(){this.button.addEventListener("click",this.handleClick)}init(){return this.button&&this.addEventListeners(),this}}new t("#btn-menu-mobile",".menu-mobile","#btn-mobile-fechar").init(),new class{constructor(t,e,r,i){this.form=document.querySelectorAll(t),this.proximo=document.querySelector(e),this.anterior=document.querySelector(r),this.nav=document.querySelectorAll(i),this.activeClass="ativo",this.index=0,this.currentForm=this.form[this.index],this.currentNav=this.nav[this.index],this.currentForm&&(this.cpfInput=this.currentForm.querySelector("#cpf"),this.email=this.currentForm.querySelector("#email"),this.cel=this.currentForm.querySelector('input[name="phone"]')),this.handleClickNext=this.handleClickNext.bind(this),this.handleClickPrev=this.handleClickPrev.bind(this),this.handleSubmit=this.handleSubmit.bind(this)}async handleSubmit(t){t.preventDefault(),console.log("olá");const i={},a={};document.querySelectorAll('[data-fazer-pedido="sender"] input, [data-fazer-pedido="sender"] select, [data-fazer-pedido="sender"] textarea').forEach((t=>{i[t.name]=t.value})),document.querySelectorAll('[data-fazer-pedido="recipient"] input, [data-fazer-pedido="recipient"] select, [data-fazer-pedido="recipient"] textarea').forEach((t=>{a[t.name]=t.value}));const s={sender:i,recipient:a},n=document.querySelector("#termos"),o=document.querySelector("#cel");if(o.value=r.formatarTelefone(o.value),console.log(o.value),n&&(console.log(!n.checked),!n.checked))return void alert("Leia os termos de serviço!");if(r.validarTelefone(o.value))return console.log("oláaaaa"),void alert("Insira um telefone válido");const l=document.createElement("img");l.src="./assets/img/loading.svg",l.className="rotate-image",this.currentForm.appendChild(l);try{await e("https://zoe-production-4a9e.up.railway.app/order","POST",{"Content-Type":"application/json"},s),this.limparInput()}catch(t){console.error(t)}finally{this.currentForm.removeChild(l)}}handleClickNext(t){return t.preventDefault(),r.validarCPF(r.formatarCPF(this.cpfInput.value))||r.validarCNPJ(r.formatarCNPJ(this.cpfInput.value))?r.validarEmail(this.email.value)?void(r.validarTelefone(this.cel.value)?this.index<this.form.length-1&&(this.index+=1,console.log(this.index),this.form.forEach((t=>t.classList.remove(this.activeClass))),this.currentForm=this.form[this.index],this.currentForm.classList.add(this.activeClass),this.nav.forEach((t=>t.classList.remove(this.activeClass))),this.currentNav=this.nav[this.index],this.currentNav.classList.add(this.activeClass),this.index===this.form.length-1)&&this.currentForm.querySelector(".btn.cadastrar").addEventListener("click",this.handleSubmit):alert("Insira um telefone válido")):(alert("Email inválido!"),void this.email.focus()):(alert("CPF/CNPJ inválido!"),void this.cpfInput.focus())}handleClickPrev(t){t.preventDefault(),this.index>=0&&(this.index-=1,console.log(this.index),this.form.forEach((t=>t.classList.remove(this.activeClass))),this.currentForm=this.form[this.index],this.currentForm.classList.add(this.activeClass),this.nav.forEach((t=>t.classList.remove(this.activeClass))),this.currentNav=this.nav[this.index],this.currentNav.classList.add(this.activeClass))}formatarCPForCPNJ(t){t.length>18&&(t=t.slice(0,18)),t.length<=14?(this.cpfInput.value=r.formatarCPF(t),r.validarCPF(r.formatarCPF(t))?this.cpfInput.classList.remove("erro"):this.cpfInput.classList.add("erro")):(this.cpfInput.value=r.formatarCNPJ(t),r.validarCNPJ(r.formatarCNPJ(t))?this.cpfInput.classList.remove("erro"):this.cpfInput.classList.add("erro"))}formatarCel(t){t.length>13&&(t=t.slice(0,15)),this.cel.value=r.formatarTelefone(t)}limparInput(){this.form.querySelectorAll("input, textarea").forEach((t=>{t.value=""}))}addButtonEvent(){this.proximo.addEventListener("click",this.handleClickNext),this.anterior.addEventListener("click",this.handleClickPrev),this.cpfInput.addEventListener("input",(()=>{this.formatarCPForCPNJ(this.cpfInput.value)})),this.cel.addEventListener("input",(()=>{this.formatarCel(this.cel.value)}))}init(){return this.form.length&&(this.addButtonEvent(),this.currentForm.classList.add(this.activeClass),this.currentNav.classList.add(this.activeClass)),this}}("[data-fazer-pedido]",".btn.proximo",".btn.anterior",".cadastro-nav-item").init(),new t("#btn-rastreio","[data-rastreio]","#btn-rastreio-fechar").init(),new t("#abrir-termos","[data-termos]","#btn-termos-fechar").init(),new class{constructor(t,e,r){this.abrir=document.querySelector(t),this.form=document.querySelectorAll(`${e} select`),this.container=document.querySelector(r),this.handleClick=this.handleClick.bind(this),this.dadosFetch=this.dadosFetch.bind(this)}async dadosFetch(){if(this.form[0].value&&this.form[1].value){const t=document.createElement("img");t.src="./assets/img/loading.svg",t.className="rotate-image",this.container.appendChild(t);try{const t=await e("https://zoe-production-4a9e.up.railway.app/product","GET");return await t.json()}catch(t){console.log(t)}finally{this.container.removeChild(t)}}return null}createDiv(t){const e=this.container.querySelector(".valores-popup");e&&this.container.removeChild(e);const r=document.createElement("div");return r.className="valores-popup cor-p5 ativo",r.setAttribute("data-anime","slide-left"),r.innerHTML=`\n    <h1>VALOR R$${t},00</h1>\n  `,this.container.appendChild(r),r}handleClick(t){t.preventDefault(),this.dadosFetch().then((t=>{const e=this.form[0].value.toLowerCase(),r=this.form[1].value.toLowerCase();let i=null;console.log(e,r),t?t.forEach((t=>{const[a,s]=t.name.toLowerCase().split("x");(a===e&&s===r||a===r&&s===e)&&(i=t.price)})):window.alert("[ERROR] Insira um valor válido!"),i&&(console.log(i),this.createDiv(i))}))}addEventListeners(){this.abrir.addEventListener("click",this.handleClick)}init(){this.abrir&&this.addEventListeners()}}("#btn-consultar-valor","[data-form='simular-valor']","[data-form='simular-valor']").init(),new r("#enviar-contato","[data-form='contato']","https://zoe-production-4a9e.up.railway.app/contact","POST",{"Content-Type":"application/json"}).init(),new class{constructor(t){this.nav=document.querySelector(t),this.handleScroll=this.handleScroll.bind(this)}handleScroll(){const t=window.scrollY-25,{height:e}=this.nav.getBoundingClientRect();t>e?this.nav.classList.add("ativo"):this.nav.classList.remove("ativo")}addEventListeners(){window.addEventListener("scroll",(()=>{this.handleScroll(),window.removeEventListener("scroll",this.handleScroll)}))}init(){this.addEventListeners()}}(".navegacao-bg").init(),new class{constructor(t){this.anime=document.querySelectorAll(t),this.handleScroll=this.handleScroll.bind(this)}handleScroll(){const t=.6*window.innerHeight;this.anime.forEach((e=>{const{top:r}=e.getBoundingClientRect();t-r>0?e.classList.add("ativo"):e.classList.remove("ativo")}))}addEventListeners(){window.addEventListener("scroll",this.handleScroll)}init(){return this.addEventListeners(),this.anime[0].classList.add("ativo"),this}}("[data-anime]").init(),new class{constructor(t,e){this.forms=document.querySelectorAll(t),this.navItems=document.querySelectorAll(e),this.formIndex=0,this.currentForm=this.forms[this.formIndex],this.currentForm&&(this.cpfInput=this.currentForm.querySelector('input[name="cpf"]')),this.handleSubmit=this.handleSubmit.bind(this)}async handleSubmit(t){t.preventDefault();const i=new FormData(this.currentForm),a=Object.fromEntries([...i]),s=this.currentForm.querySelector("#termos");if(s&&!s.checked)return void alert("Leia os termos de serviço!");if(this.cpfInput.length&&!r.validarCPF(r.formatarCPF(this.cpfInput.value))&&!r.validarCNPJ(r.formatarCNPJ(this.cpfInput.value)))return alert("CPF/CNPJ inválido!"),void this.cpfInput.focus();const n=document.createElement("img");n.src="./assets/img/loading.svg",n.className="rotate-image",this.currentForm.appendChild(n);try{await e("https://zoe-production-4a9e.up.railway.app/order","POST",{"Content-Type":"application/json"},a),this.formIndex+=1,this.limparInput(),this.formIndex<this.forms.length&&(this.currentForm.classList.remove("ativo"),this.navItems[this.formIndex-1].classList.remove("ativo"),this.navItems[this.formIndex].classList.add("ativo"),this.currentForm=this.forms[this.formIndex],this.currentForm.classList.add("ativo"),this.currentForm.addEventListener("submit",this.handleSubmit.bind(this)))}catch(t){console.error(t)}finally{this.forms[this.formIndex-1].removeChild(n)}}formatarCPFCPNJ(t){t.length>18&&(t=t.slice(0,18)),t.length<=14?(this.cpfInput.value=r.formatarCPF(t),r.validarCPF(r.formatarCPF(t))?this.cpfInput.classList.remove("erro"):this.cpfInput.classList.add("erro")):(this.cpfInput.value=r.formatarCNPJ(t),r.validarCNPJ(r.formatarCNPJ(t))?this.cpfInput.classList.remove("erro"):this.cpfInput.classList.add("erro"))}limparInput(){this.currentForm.querySelectorAll("input, textarea, select").forEach((t=>{const e=t;e.value="",e.checked=!1}))}addEventListeners(){this.currentForm.addEventListener("submit",this.handleSubmit),this.cpfInput.addEventListener("input",(()=>{this.formatarCPFCPNJ(this.cpfInput.value)}))}init(){return this.currentForm&&this.cpfInput&&(this.addEventListeners(),this.currentForm.classList.add("ativo"),this.navItems[this.formIndex].classList.add("ativo")),this}}("[data-fazer-pedido]",".cadastro-nav-item").init()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+var __webpack_exports__ = {};
+
+;// CONCATENATED MODULE: ./src/modules/FixedContainer.js
+class FixedContainer {
+  constructor(abrir, container, fechar) {
+    this.abrir = document.querySelector(abrir);
+    this.container = document.querySelector(container);
+    this.fechar = document.querySelector(fechar);
+    this.activeClass = 'ativo';
+
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
+  toggleMenu(event) {
+    event.preventDefault()
+    this.container.classList.toggle(this.activeClass);
+  }
+
+  addEventListeners() {
+    this.abrir.addEventListener('click', this.toggleMenu);
+    this.fechar.addEventListener('click', this.toggleMenu);
+  }
+
+  init() {
+    if (this.abrir) {
+      this.addEventListeners();
+    }
+    return this;
+  }
+}
+
+;// CONCATENATED MODULE: ./src/modules/NavFixed.js
+class NavFixed {
+  constructor(nav) {
+    this.nav = document.querySelector(nav);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleScroll() {
+    const windowHeight = window.scrollY - 25;
+    const { height } = this.nav.getBoundingClientRect();
+    if (windowHeight > height) {
+      this.nav.classList.add("ativo")
+    } else {
+      this.nav.classList.remove("ativo")
+    }
+    
+  }
+
+  addEventListeners() {
+    window.addEventListener('scroll', ()=>{
+      this.handleScroll();
+      window.removeEventListener("scroll", this.handleScroll)
+    });
+  }
+
+  init() {
+    this.addEventListeners();
+  }
+}
+
+;// CONCATENATED MODULE: ./src/modules/SlideIn.js
+class SlideIn{
+  constructor(anime){
+    this.anime = document.querySelectorAll(anime);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleScroll(){
+    const windowHeight = window.innerHeight * .6;
+
+    this.anime.forEach(item => {
+      const {top} = item.getBoundingClientRect();
+      const animeHeight = windowHeight - top > 0
+      if(animeHeight){
+        item.classList.add('ativo');
+      } else {
+        item.classList.remove('ativo');
+      }
+    })
+  }
+
+  addEventListeners(){
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  init(){
+    this.addEventListeners();
+    this.anime[0].classList.add('ativo')
+    return this;
+  }
+}
+;// CONCATENATED MODULE: ./src/modules/fetchDados.js
+async function fetchDados(
+  url,
+  method = 'GET',
+  headers = {},
+  body = null,
+) {
+  const options = { method, headers };
+  if (body) options.body = JSON.stringify(body);
+  try {
+    const response = await fetch(url, options);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar dados: ${response.status}`);
+    }
+    return response;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Erro ao buscar dados:', error);
+    throw error;
+  }
+}
+
+;// CONCATENATED MODULE: ./src/modules/SimularValor.js
+
+
+class SimularValores {
+  constructor(abrir, form, container) {
+    this.abrir = document.querySelector(abrir);
+    this.form = document.querySelectorAll(`${form} select`);
+    this.container = document.querySelector(container);
+
+    this.handleClick = this.handleClick.bind(this);
+    this.dadosFetch = this.dadosFetch.bind(this);
+  }
+
+  async dadosFetch() {
+    if (this.form[0].value && this.form[1].value) {
+      const img = document.createElement('img');
+      img.src = './assets/img/loading.svg';
+      img.className = 'rotate-image';
+      this.container.appendChild(img);
+      try {
+        const dadosFetch = await fetchDados(
+          'https://zoe-production-4a9e.up.railway.app/product',
+          'GET',
+        );
+        const dadosJson = await dadosFetch.json()
+        return dadosJson;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.container.removeChild(img);
+      }
+    }
+    return null;
+  }
+
+  createDiv(valor) {
+    const divAnterior = this.container.querySelector('.valores-popup');
+    if (divAnterior) {
+      this.container.removeChild(divAnterior);
+    }
+    const div = document.createElement('div');
+    div.className = 'valores-popup cor-p5 ativo';
+    div.setAttribute('data-anime', 'slide-left');
+    div.innerHTML = `
+    <h1>VALOR R$${valor},00</h1>
+  `;
+    this.container.appendChild(div);
+    return div;
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    this.dadosFetch().then((dadosJson) => {
+      const select1 = this.form[0].value.toLowerCase();
+      const select2 = this.form[1].value.toLowerCase();
+
+      let value = null;
+      console.log(select1, select2)
+      if (dadosJson) {
+        dadosJson.forEach((item) => {
+          const [origem, destino] = item.name.toLowerCase().split('x');
+          if (
+            (origem === select1 && destino === select2) ||
+            (origem === select2 && destino === select1)
+          ) {
+            value = item.price;
+          }
+        });
+      } else {
+        // eslint-disable-next-line no-alert
+        window.alert('[ERROR] Insira um valor válido!');
+      }
+
+      if (value) {
+        console.log(value);
+        this.createDiv(value);
+      }
+    });
+  }
+
+  addEventListeners() {
+    this.abrir.addEventListener('click', this.handleClick);
+  }
+
+  init() {
+    if (this.abrir) this.addEventListeners();
+  }
+}
+
+;// CONCATENATED MODULE: ./src/modules/Formulario.js
+
+
+class Formulario {
+  constructor(button, form, url, method, header) {
+    this.button = document.querySelector(button);
+    this.form = document.querySelector(form);
+    this.url = url;
+    this.method = method;
+    this.headers = header;
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  static formatarTelefone(telefone) {
+    if (telefone.length > 13) {
+      telefone = telefone.slice(0, 15);
+    }
+    telefone = telefone.replace(/\D/g, '');
+    telefone = telefone.replace(/^(\d{2})(\d)/g, '($1) $2');
+    telefone = telefone.replace(/(\d)(\d{4})$/, '$1-$2');
+    return telefone;
+  }
+
+  static validarTelefone(telefone) {
+    let telefoneValidar = telefone;
+    telefoneValidar = telefoneValidar.replace(/[^\d]+/g, '');
+
+    if (telefoneValidar.length !== 10 && telefoneValidar.length !== 11) {
+      return false;
+    }
+
+    const ddd = telefoneValidar.substring(0, 2);
+    if (
+      ![
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17',
+        '18',
+        '19',
+        '21',
+        '22',
+        '24',
+        '27',
+        '28',
+        '31',
+        '32',
+        '33',
+        '34',
+        '35',
+        '37',
+        '38',
+        '41',
+        '42',
+        '43',
+        '44',
+        '45',
+        '46',
+        '47',
+        '48',
+        '49',
+        '51',
+        '53',
+        '54',
+        '55',
+        '61',
+        '62',
+        '63',
+        '64',
+        '65',
+        '66',
+        '67',
+        '68',
+        '69',
+        '71',
+        '73',
+        '74',
+        '75',
+        '77',
+        '79',
+        '81',
+        '82',
+        '83',
+        '84',
+        '85',
+        '86',
+        '87',
+        '88',
+        '89',
+        '91',
+        '92',
+        '93',
+        '94',
+        '95',
+        '96',
+        '97',
+        '98',
+        '99',
+      ].includes(ddd)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  static formatarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    cpf = cpf.replace(/^(\d{3})(\d)/, '$1.$2');
+    cpf = cpf.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+    cpf = cpf.replace(/\.(\d{3})(\d)/, '.$1-$2');
+    return cpf;
+  }
+
+  static formatarCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, ''); // remove caracteres não numéricos
+    cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+    return cnpj;
+  }
+
+  static validarCNPJ(cnpj) {
+    cnpj = cnpj.replace(/[^\d]+/g, '');
+
+    if (cnpj.length !== 14) return false;
+
+    if (
+      cnpj === '00000000000000' ||
+      cnpj === '11111111111111' ||
+      cnpj === '22222222222222' ||
+      cnpj === '33333333333333' ||
+      cnpj === '44444444444444' ||
+      cnpj === '55555555555555' ||
+      cnpj === '66666666666666' ||
+      cnpj === '77777777777777' ||
+      cnpj === '88888888888888' ||
+      cnpj === '99999999999999'
+    )
+      return false;
+
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    const digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+
+    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado !== Number(digitos.charAt(0))) return false;
+
+    tamanho += 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+
+    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado !== Number(digitos.charAt(1))) return false;
+
+    return true;
+  }
+
+  static validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, '');
+
+    if (cpf.length !== 11) {
+      return false;
+    }
+
+    if (/^(\d)\1+$/.test(cpf)) {
+      return false;
+    }
+
+    let sum = 0;
+    for (let i = 0; i < 9; i += 1) {
+      sum += Number(cpf.charAt(i)) * (10 - i);
+    }
+    let mod = sum % 11;
+    let digit = mod < 2 ? 0 : 11 - mod;
+    if (digit !== Number(cpf.charAt(9))) {
+      return false;
+    }
+
+    sum = 0;
+    for (let i = 0; i < 10; i += 1) {
+      sum += Number(cpf.charAt(i)) * (11 - i);
+    }
+    mod = sum % 11;
+    digit = mod < 2 ? 0 : 11 - mod;
+    if (digit !== Number(cpf.charAt(10))) {
+      return false;
+    }
+
+    return true;
+  }
+
+  static validarEmail(email) {
+    const regex =
+      /(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i;
+    return regex.test(email);
+  }
+
+  static erroValidacao(input, erro) {
+    const span = document.createElement('span');
+    span.style.color = 'red';
+    span.innerText = `Erro no ${erro}`;
+    input.insertAdjacentElement('afterend', span);
+    return span;
+  }
+
+  limparInput() {
+    const inputs = this.form.querySelectorAll('input, textarea');
+    inputs.forEach((item) => {
+      const input = item;
+      input.value = '';
+    });
+  }
+
+  async handleClick(event) {
+    event.preventDefault();
+    console.log(typeof this.form);
+    const cpf = this.form.querySelector("input[name='cpf']");
+    const email = this.form.querySelector('#email');
+    const telefoneInput = this.form.querySelector('#cel');
+    const telefone = telefoneInput ? telefoneInput.value : '';
+    const nome = this.form.querySelector("input[name='fullName']");
+
+    if (nome.value.length < 3) {
+      alert('Insira um nome valido');
+      return;
+    }
+
+    if (telefone && !Formulario.validarTelefone(telefone)) {
+      alert('Telefone inválido!');
+      return;
+    }
+
+    if (
+      cpf &&
+      cpf.value !== '' &&
+      !Formulario.validarCPF(Formulario.formatarCPF(cpf.value))
+    ) {
+      Formulario.erroValidacao(cpf, 'cpf');
+      return;
+    }
+
+    if (email && email.value !== '' && !Formulario.validarEmail(email.value)) {
+      Formulario.erroValidacao(telefone, 'telefone');
+      return;
+    }
+
+    if (this.method === ('GET' || 0)) {
+      fetchDados(this.url, this.method).then((response) =>
+        console.log(response),
+      );
+    } else {
+      const formData = new FormData(this.form);
+      const formJson = {};
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [key, value] of formData) {
+        formJson[key] = value;
+      }
+      try {
+        await fetchDados(this.url, this.method, this.headers, formJson);
+        this.limparInput();
+        alert('Enviado!');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  addEventListeners() {
+    this.button.addEventListener('click', this.handleClick);
+  }
+
+  init() {
+    if (this.button) this.addEventListeners();
+    return this;
+  }
+}
+
+;// CONCATENATED MODULE: ./src/modules/Carousel.js
+
+
+
+class FormCarousel {
+  constructor(form, proximo, anterior, nav) {
+    this.form = document.querySelector(form);
+    this.proximo = document.querySelector(proximo);
+    this.anterior = document.querySelector(anterior);
+    this.nav = document.querySelectorAll(nav);
+    this.activeClass = 'ativo';
+    this.index = 0;
+    this.currentNav = this.nav[this.index];
+    if (this.form) {
+      this.currentForm = this.form.children[this.index];
+      this.cpfInput = this.currentForm.querySelector('#cpf');
+      this.email = this.currentForm.querySelector('#email');
+      this.cel = this.form.querySelectorAll('input[name="phone"]');
+    }
+
+    this.handleClickNext = this.handleClickNext.bind(this);
+    this.handleClickPrev = this.handleClickPrev.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault()
+    console.log('handlesubmit');
+
+    const sender = {};
+    const recipient = {};
+    const senderInputs = document.querySelectorAll(
+      '[data-fazer-pedido="sender"] input, [data-fazer-pedido="sender"] select, [data-fazer-pedido="sender"] textarea',
+    );
+    senderInputs.forEach((input) => {
+      sender[input.name] = input.value;
+    });
+    const recipientInputs = document.querySelectorAll(
+      '[data-fazer-pedido="recipient"] input, [data-fazer-pedido="recipient"] select, [data-fazer-pedido="recipient"] textarea',
+    );
+    recipientInputs.forEach((input) => {
+      recipient[input.name] = input.value;
+    });
+
+    const formJson = {
+      sender,
+      recipient,
+    };
+
+    const termos = document.querySelector('#termos');
+
+    if (termos && !termos.checked) {
+      termos.classList.add("erro")
+      return;
+    }
+
+    if (!Formulario.validarTelefone(this.cel[this.index].value)) {
+      termos.classList.add("erro")
+      return;
+    }
+
+    const img = document.createElement('img');
+    img.src = './assets/img/loading.svg';
+    img.className = 'rotate-image';
+    this.currentForm.appendChild(img);
+    try {
+      await fetchDados(
+        `https://zoe-production-4a9e.up.railway.app/order`,
+        'POST',
+        { 'Content-Type': 'application/json' },
+        formJson,
+      ).then((response) => {
+        if (!response.ok) {
+          console.log(this.currentForm);
+          this.currentForm.innerHTML = `<p>${response.ok}</p>`;
+        }
+        console.log('foi');
+      });
+
+    } catch (error) {
+      console.error(error);
+      this.currentForm.innerHTML = `<p>deu erro ${error}<p>`
+    } finally {
+      this.limparInput();
+      this.currentForm.removeChild(img);
+    }
+  }
+
+  handleClickNext(event) {
+    event.preventDefault();
+    if (
+      !(
+        Formulario.validarCPF(Formulario.formatarCPF(this.cpfInput.value)) ||
+        Formulario.validarCNPJ(Formulario.formatarCNPJ(this.cpfInput.value))
+      )
+    ) {
+      alert('CPF/CNPJ inválido!');
+      this.cpfInput.focus();
+      return;
+    }
+
+    if (!Formulario.validarEmail(this.email.value)) {
+      alert('Email inválido!');
+      this.email.focus();
+      return;
+    }
+
+    if (!Formulario.validarTelefone(this.cel[this.index].value)) {
+      alert('Insira um telefone válido');
+      return;
+    }
+
+    if (this.index <= (this.form.length - 1)) {
+      this.index += 1;
+      console.log(this.index);
+      // this.form.forEach((item) => item.classList.remove(this.activeClass));
+      const { children } = this.form;
+      for (let i = 0; i < children.length; i += 1) {
+        const item = children[i];
+        item.classList.remove(this.activeClass);
+      }
+      this.currentForm = this.form.children[this.index];
+      this.currentForm.classList.add(this.activeClass);
+
+      this.nav.forEach((item) => item.classList.remove(this.activeClass));
+      this.currentNav = this.nav[this.index];
+      this.currentNav.classList.add(this.activeClass);
+
+      console.log(this.form);
+
+      if (this.index === this.form.children.length - 1) {
+        this.form.addEventListener('submit', this.handleSubmit);
+      }
+    }
+
+    this.addEventListeners(this.index);
+  }
+
+  handleClickPrev(event) {
+    event.preventDefault();
+    if (this.index >= 0) {
+      this.index -= 1;
+      console.log(this.index);
+      const { children } = this.form;
+      for (let i = 0; i < children.length; i += 1) {
+        const item = children[i];
+        item.classList.remove(this.activeClass);
+      }
+      this.currentForm = this.form.children[this.index];
+      this.currentForm.classList.add(this.activeClass);
+
+      this.nav.forEach((item) => item.classList.remove(this.activeClass));
+      this.currentNav = this.nav[this.index];
+      this.currentNav.classList.add(this.activeClass);
+    }
+  }
+
+  formatarCPForCPNJ(value) {
+    if (value.length > 18) {
+      value = value.slice(0, 18);
+    }
+
+    if (value.length <= 14) {
+      this.cpfInput.value = Formulario.formatarCPF(value);
+      if (Formulario.validarCPF(Formulario.formatarCPF(value))) {
+        this.cpfInput.classList.remove('erro');
+      } else {
+        this.cpfInput.classList.add('erro');
+      }
+    } else {
+      this.cpfInput.value = Formulario.formatarCNPJ(value);
+      if (Formulario.validarCNPJ(Formulario.formatarCNPJ(value))) {
+        this.cpfInput.classList.remove('erro');
+      } else {
+        this.cpfInput.classList.add('erro');
+      }
+    }
+  }
+
+  limparInput() {
+    const inputs = this.form.querySelectorAll('input, textarea');
+    inputs.forEach((item) => {
+      const input = item;
+      input.value = '';
+    });
+  }
+
+  addEventListeners() {
+    this.proximo.addEventListener('click', this.handleClickNext);
+    this.anterior.addEventListener('click', this.handleClickPrev);
+
+    this.cpfInput.addEventListener('input', () => {
+      this.formatarCPForCPNJ(this.cpfInput.value);
+    });
+
+    // const inputCel = this.currentForm.querySelector("#cel");
+    // inputCel.addEventListener("input", (event)=>{
+    //   console.log(inputCel.value)
+    //   inputCel.value = this.formatarCel(event.target.value)
+
+    // })
+    this.cel.forEach((cel) => {
+      cel.addEventListener('input', (event) => {
+        console.log(this.cel[2]);
+        const phone = cel;
+        phone.value = Formulario.formatarTelefone(event.target.value);
+      });
+    });
+  }
+
+  init() {
+    if (this.form) {
+      console.log(this.form);
+      this.addEventListeners();
+      this.currentForm.classList.add(this.activeClass);
+      this.currentNav.classList.add(this.activeClass);
+    }
+    return this;
+  }
+}
+
+;// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+
+
+
+
+const menuMobile = new FixedContainer(
+  '#btn-menu-mobile',
+  '.menu-mobile',
+  '#btn-mobile-fechar',
+);
+menuMobile.init();
+
+const proximo = new FormCarousel(
+  '.cadastro-form form',
+  '.btn.proximo',
+  '.btn.anterior',
+  '.cadastro-nav-item',
+);
+proximo.init();
+
+// container de rastreio
+const containerRastreio = new FixedContainer(
+  '#btn-rastreio',
+  '[data-rastreio]',
+  '#btn-rastreio-fechar',
+);
+containerRastreio.init();
+
+const containerTermos = new FixedContainer(
+  '#abrir-termos',
+  '[data-termos]',
+  '#btn-termos-fechar',
+);
+containerTermos.init();
+
+const simularValor = new SimularValores(
+  '#btn-consultar-valor',
+  "[data-form='simular-valor']",
+  "[data-form='simular-valor']",
+);
+simularValor.init();
+
+const headersContato = { 'Content-Type': 'application/json' };
+const enviarContato = new Formulario(
+  '#enviar-contato',
+  "[data-form='contato']",
+  'https://zoe-production-4a9e.up.railway.app/contact',
+  'POST',
+  headersContato,
+);
+enviarContato.init();
+
+const navFixed = new NavFixed('.navegacao-bg');
+navFixed.init();
+
+const anime = new SlideIn('[data-anime]');
+anime.init();
+
+/******/ })()
+;
