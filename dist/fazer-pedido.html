@@ -63,17 +63,17 @@
 
       <div class="cadastro-redes">
         <div>
-          <a href="https://instagram.com/zoe_express_?igshid=MWQ2ODkyMjM=" target="_blank"><img src="./assets/img/instagram-p.svg" alt=""></a>
+          <a href="https://instagram.com/zoe_express_?igshid=MWQ2ODkyMjM=" target="_blank"><img src="./assets/img/instagram-p.svg" alt="Instagram"></a>
 
         </div>
 
         <div>
-          <a href="https://www.facebook.com/profile.php?id=100091350879681&mibextid=LQQJ4d" target="_blank"><img src="./assets/img/facebook-p.svg"></a>
+          <a href="https://www.facebook.com/profile.php?id=100091350879681&mibextid=LQQJ4d" target="_blank"><img src="./assets/img/facebook-p.svg" alt="Facebook"></a>
 
         </div>
 
         <div>
-          <a href="https://wa.me/5599984802874" target="_blank"><img src="./assets/img/whatsapp.svg"></a>
+          <a href="https://wa.me/5599984802874" target="_blank"><img src="./assets/img/whatsapp.svg" alt="whatsapp"></a>
 
         </div>
       </div>
@@ -85,7 +85,7 @@
           <h3 class="font-1-m-b">1. Dados do Rementente.</h3>
           <div class="col">
             <label for="name">Nome Completo</label>
-            <input type="text" class="cpf" id="name" name="fullName" required placeholder="Nome Completo">
+            <input type="text" class="cpf" id="name-sender" name="fullName" required placeholder="Nome Completo">
           </div>
 
           <div>
@@ -95,7 +95,7 @@
 
           <div>
             <label for="cel">Telefone</label>
-            <input type="text" id="cel" name="phone" required placeholder="99 99999-9999">
+            <input type="text" id="cel-sender" name="phone" required placeholder="99 99999-9999">
           </div>
 
           <div class="col">
@@ -106,13 +106,13 @@
 
           <div class="col">
             <label for="endereco">Endereço Completo</label>
-            <input type="text" id="endereco" name="address" required placeholder="Rua Logo Ali, Bairro Bem Ali, 99">
+            <input type="text" id="endereco-sender" name="address" required placeholder="Rua Logo Ali, Bairro Bem Ali, 99">
 
           </div>
 
           <div class="col">
             <label for="complemento">Complemento</label>
-            <input type="text" id="complemento" name="addressLine2">
+            <input type="text" id="complemento-sender" name="addressLine2">
 
           </div>
 
@@ -144,24 +144,24 @@
           <h3 class="font-1-m-b">2. Dados do Destinatário.</h3>
           <div class="col">
             <label for="name">Nome completo</label>
-            <input type="text" id="name" name="fullName" required>
+            <input type="text" id="name-recipient" name="fullName" required>
           </div>
 
           <div class="col">
             <label for="endereco">Endereço Completo</label>
-            <input type="text" id="endereco" name="address" required>
+            <input type="text" id="endereco-recipient" name="address" required>
 
           </div>
 
           <div>
             <label for="complemento">Complemento</label>
-            <input type="text" id="complemento" name="addressLine2">
+            <input type="text" id="complemento-recipient" name="addressLine2">
 
           </div>
 
           <div>
             <label for="cel">Telefone</label>
-            <input type="text" id="cel" name="phone" required>
+            <input type="text" id="cel-recipient" name="phone" required>
           </div>
 
 
@@ -182,7 +182,7 @@
 
           <div class="col">
             <input type="checkbox" name="termos" id="termos">
-            <label for="termos"><a class="link" id="abrir-termos">Termos e Condições</a></label>
+            <label for="termos"><button class="link" id="abrir-termos">Termos e Condições</button></label>
           </div>
 
 

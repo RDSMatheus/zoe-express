@@ -24,6 +24,9 @@
   color: var(--cor-p2);
   display: inline-block;
   margin-bottom: 10px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
 }
 
 .link::after{
