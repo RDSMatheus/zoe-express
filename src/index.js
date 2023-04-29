@@ -6,6 +6,7 @@ import Formulario from './modules/Formulario';
 import FormWizard from './modules/FormWizard';
 import FormCarousel from './modules/Carousel';
 import Accordion from './modules/Accordion';
+import './style.css';
 
 const menuMobile = new FixedContainer(
   '#btn-menu-mobile',
