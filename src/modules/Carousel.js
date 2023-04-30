@@ -23,38 +23,38 @@ export default class FormCarousel {
   }
 
   async handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     console.log('handlesubmit');
 
-    const sender = {};
-    const recipient = {};
-    const senderInputs = document.querySelectorAll(
+    const senders = {};
+    const recipients = {};
+    const sendersInputs = document.querySelectorAll(
       '[data-fazer-pedido="sender"] input, [data-fazer-pedido="sender"] select, [data-fazer-pedido="sender"] textarea',
     );
-    senderInputs.forEach((input) => {
-      sender[input.name] = input.value;
+    sendersInputs.forEach((input) => {
+      senders[input.name] = input.value;
     });
-    const recipientInputs = document.querySelectorAll(
+    const recipientsInputs = document.querySelectorAll(
       '[data-fazer-pedido="recipient"] input, [data-fazer-pedido="recipient"] select, [data-fazer-pedido="recipient"] textarea',
     );
-    recipientInputs.forEach((input) => {
-      recipient[input.name] = input.value;
+    recipientsInputs.forEach((input) => {
+      recipients[input.name] = input.value;
     });
 
     const formJson = {
-      sender,
-      recipient,
+      senders,
+      recipients,
     };
 
     const termos = document.querySelector('#termos');
 
     if (termos && !termos.checked) {
-      termos.classList.add("erro")
+      termos.classList.add('erro');
       return;
     }
 
     if (!Formulario.validarTelefone(this.cel[this.index].value)) {
-      termos.classList.add("erro")
+      termos.classList.add('erro');
       return;
     }
 
@@ -64,21 +64,28 @@ export default class FormCarousel {
     this.currentForm.appendChild(img);
     try {
       await fetchDados(
-        `https://zoe-production-4a9e.up.railway.app/order`,
+        `https://zoe-production-06b7.up.railway.app/order`,
         'POST',
         { 'Content-Type': 'application/json' },
         formJson,
-      ).then((response) => {
-        if (!response.ok) {
-          console.log(this.currentForm);
-          this.currentForm.innerHTML = `<p>${response.ok}</p>`;
+      );
+      this.currentForm.innerHTML = `<p>deu bom<p>
+      <button id="voltar">Voltar</button>`;
+      console.log(this.currentForm);
+      const voltar = this.currentForm.querySelector('#voltar');
+      console.log(voltar);
+      voltar.addEventListener('click', (e) => {
+        e.preventDefault();
+        const { children } = this.form;
+        for (let i = 0; i < children.length; i += 1) {
+          const item = children[i];
+          item.classList.remove(this.activeClass);
         }
-        console.log('foi');
+        this.form.children[0].classList.add(this.activeClass);
       });
-
     } catch (error) {
       console.error(error);
-      this.currentForm.innerHTML = `<p>deu erro ${error}<p>`
+      this.currentForm.innerHTML = `<p>deu erro ${error}<p>`;
     } finally {
       this.limparInput();
       this.currentForm.removeChild(img);
@@ -109,7 +116,7 @@ export default class FormCarousel {
       return;
     }
 
-    if (this.index <= (this.form.length - 1)) {
+    if (this.index <= this.form.length - 1) {
       this.index += 1;
       console.log(this.index);
       // this.form.forEach((item) => item.classList.remove(this.activeClass));
