@@ -77,8 +77,16 @@ input.erro{
   grid-column: 1/-1;
 }
 
-.rotate-image{
+.loading {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border-top: 4px solid var(--cor-p1);
+  border-bottom: 4px solid var(--cor-p1);
+  border-left: 4px solid var(--cor-p1);
+  border-right: 4px solid var(--cor-p5);
   animation: rotation 2s linear infinite;
 }
+
 
 

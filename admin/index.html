@@ -10,12 +10,32 @@
   </title>
   <link rel="shortcut icon" href="./assets/img/detalhe-ico.ico" width="16" type="image/x-icon">
   <style>
-    .admin{
+    .admin {
       background-color: var(--cor-11);
       padding: 20px;
       margin: 20px;
     }
-    .clientes{
+
+    .admin input {
+      border: none;
+      padding: 1rem;
+      background-color: #eee;
+      border-radius: 5px;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .admin h1 {
+      display: flex;
+      gap: 20px;
+    }
+
+    .admin input[readonly] {
+      color: #777;
+      background-color: #333;
+    }
+
+    .clientes {
       display: grid;
       grid-template-columns: 1fr 1fr max-content;
       justify-content: center;
@@ -23,8 +43,10 @@
       background-color: var(--cor-12);
       border-radius: 4px;
       padding: 20px;
+      gap: 20px;
     }
-    .clientes h2{
+
+    .clientes h2 {
       grid-column: 1/-1;
     }
 
@@ -36,7 +58,7 @@
       margin-bottom: 10px;
     }
 
-    .button{
+    .button {
       display: grid;
       width: max-content;
       height: max-content;
@@ -49,15 +71,20 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
-    }
-
-    .button.delete{
-      background-color: red;
-    }
-    .button.update{
       background-color: var(--cor-11);
     }
 
+    .button.delete {
+      background-color: red;
+    }
+
+    .button.update {
+      background-color: var(--cor-11);
+    }
+
+    .col {
+      grid-column: 1/-1;
+    }
   </style>
 </head>
 

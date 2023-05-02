@@ -1,13 +1,19 @@
 const btn = document.querySelector('#enviar');
+
+function limparInput() {
+  const input = document.querySelectorAll('input');
+  input.value = '';
+}
+
 async function testantoAPI(event) {
   event.preventDefault();
   const source = document.querySelector('#source').value;
   const destination = document.querySelector('#destination').value;
-  const price = document.querySelector('#price').value;
+  const price = Number(document.querySelector('#price').value);
   const objeto = {
-    source: "bacabal",
-    destination: "cu do yuri",
-    price: "2",
+    source,
+    destination,
+    price,
   };
   console.log(objeto);
   const data = JSON.stringify(objeto);
@@ -17,6 +23,12 @@ async function testantoAPI(event) {
       'Content-Type': 'application/json',
     },
     body: data,
-  }).then((response) => console.log(response));
+  }).then((response) => {
+    if (response.ok) {
+      alert('Produto Cadastrado!');
+      limparInput();
+    }
+  });
 }
+
 btn.addEventListener('click', testantoAPI);

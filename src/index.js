@@ -3,7 +3,6 @@ import NavFixed from './modules/NavFixed';
 import SlideIn from './modules/SlideIn';
 import SimularValor from './modules/SimularValor';
 import Formulario from './modules/Formulario';
-import FormWizard from './modules/FormWizard';
 import FormCarousel from './modules/Carousel';
 import Accordion from './modules/Accordion';
 import './style.css';
