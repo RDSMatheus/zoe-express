@@ -5,6 +5,7 @@ import SimularValor from './modules/SimularValor';
 import Formulario from './modules/Formulario';
 import FormCarousel from './modules/Carousel';
 import Accordion from './modules/Accordion';
+import Tracking from './modules/Tracking';
 import './style.css';
 
 const menuMobile = new FixedContainer(
@@ -22,13 +23,8 @@ const proximo = new FormCarousel(
 );
 proximo.init();
 
-// container de rastreio
-const containerRastreio = new FixedContainer(
-  '#btn-rastreio',
-  '[data-rastreio]',
-  '#btn-rastreio-fechar',
-);
-containerRastreio.init();
+
+new Tracking().init();
 
 const containerTermos = new FixedContainer(
   '#abrir-termos',
@@ -48,7 +44,7 @@ const headersContato = { 'Content-Type': 'application/json' };
 const enviarContato = new Formulario(
   '#enviar-contato',
   "[data-form='contato']",
-  'https://zoe-production-4a9e.up.railway.app/contact',
+  'https://jsonplaceholder.typicode.com/posts',
   'POST',
   headersContato,
 );
@@ -62,3 +58,4 @@ anime.init();
 
 const accordion = new Accordion('[data-accordion] dt');
 accordion.init();
+

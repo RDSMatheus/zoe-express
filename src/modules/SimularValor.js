@@ -16,12 +16,9 @@ export default class SimularValores {
       const loading = Loading();
       this.container.appendChild(loading);
       try {
-        const dadosFetch = await fetchDados(
-          'https://zoe-production-06b7.up.railway.app/product',
-          'GET',
-        );
-        const dadosJson = await dadosFetch.json()
-        console.log(dadosJson)
+        const dadosFetch = await fetchDados('../src/produtos.json', 'GET');
+        const dadosJson = await dadosFetch.json();
+        console.log(dadosJson);
         return dadosJson;
       } catch (error) {
         console.log(error);
@@ -50,26 +47,26 @@ export default class SimularValores {
   handleClick(event) {
     event.preventDefault();
     this.dadosFetch().then((dadosJson) => {
-      const select1 = this.form[0].value.toLowerCase().replace(/-/g, " ").trim();
-      const select2 = this.form[1].value.toLowerCase().replace(/-/g, " ").trim();
+      const select1 = this.form[0].value.toLowerCase().trim();
+      const select2 = this.form[1].value.toLowerCase().trim();
 
       let value = null;
-      console.log(select1, select2)
+      console.log(select1, select2);
       if (dadosJson) {
         dadosJson.forEach((item) => {
-          console.log(item)
+          console.log(item);
           const origem = item.source.toLowerCase();
-          console.log(origem)
+          console.log(origem);
           const destino = item.destination.toLowerCase();
           if (
             (origem === select1 && destino === select2) ||
             (origem === select2 && destino === select1)
           ) {
             value = item.price;
-            console.log(value)
+            console.log(value);
           }
         });
-      }  else {
+      } else {
         // eslint-disable-next-line no-alert
         window.alert('[ERROR] Insira um valor válido!');
       }

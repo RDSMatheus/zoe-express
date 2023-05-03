@@ -9,7 +9,7 @@ export default class FixedContainer {
   }
 
   toggleMenu(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.container.classList.toggle(this.activeClass);
   }
 

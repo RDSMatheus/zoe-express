@@ -88,7 +88,7 @@ export default class FormCarousel {
 
     try {
       const enviar = await fetchDados(
-        `https://zoe-production-06b7.up.railway.app/order`,
+        `https://jsonplaceholder.typicode.com/posts`,
         'POST',
         { 'Content-Type': 'application/json' },
         formJson,
@@ -151,14 +151,10 @@ export default class FormCarousel {
   }
 
   async fetchProduct() {
-    const produtos = await fetchDados(
-      `https://zoe-production-06b7.up.railway.app/product`,
-      'GET',
-    );
+    const produtos = await fetchDados(`../src/produtos.json`, 'GET');
     const produtosResponse = await produtos.json();
     const selectSender = this.citySender.value.toLowerCase().trim();
     const selectRecipient = this.cityRecipient.value.toLowerCase().trim();
-    console.log(produtosResponse);
     let productId;
     produtosResponse.forEach((produto) => {
       console.log(produto);
@@ -167,8 +163,9 @@ export default class FormCarousel {
       const destinationFormatado = destination.toLowerCase().trim();
       const preco = this.form.querySelector('#preco');
       console.log(
-        `valor do select ${selectRecipient}, valor do json ${destination}`,
+        `valor do select ${selectSender}, valor do json ${destination}`,
       );
+
       if (
         (selectSender === sourceFormatado &&
           selectRecipient === destinationFormatado) ||
@@ -201,12 +198,12 @@ export default class FormCarousel {
       const div = document.createElement('div');
       div.classList.add(this.activeClass, 'confirmacao-envio');
       div.innerHTML = `
-    <img src="../dist/assets/img/error.svg">
-    <h2>${erro}<h2>
-    <div class="confirmacao-envio-btn">
-      <button class="btn voltar">Tentar Novamente</button>
-      <a href="../dist/contato.html" class="btn">Fale Conosco</a>
-    </div>
+      <img src="../dist/assets/img/error.svg">
+      <h2>${erro}<h2>
+      <div class="confirmacao-envio-btn">
+        <button class="btn voltar">Tentar Novamente</button>
+        <a href="../dist/contato.html" class="btn">Fale Conosco</a>
+      </div>
     `;
       return div;
     }
@@ -295,20 +292,21 @@ export default class FormCarousel {
   }
 
   formatarCPForCPNJ(value) {
-    if (value.length > 18) {
-      value = value.slice(0, 18);
+    let CpfCnpj = value;
+    if (CpfCnpj.length > 18) {
+      CpfCnpj = value.slice(0, 18);
     }
 
-    if (value.length <= 14) {
-      this.cpfInput.value = Formulario.formatarCPF(value);
-      if (Formulario.validarCPF(Formulario.formatarCPF(value))) {
+    if (CpfCnpj.length <= 14) {
+      this.cpfInput.value = Formulario.formatarCPF(CpfCnpj);
+      if (Formulario.validarCPF(Formulario.formatarCPF(CpfCnpj))) {
         this.cpfInput.classList.remove('erro');
       } else {
         this.cpfInput.classList.add('erro');
       }
     } else {
-      this.cpfInput.value = Formulario.formatarCNPJ(value);
-      if (Formulario.validarCNPJ(Formulario.formatarCNPJ(value))) {
+      this.cpfInput.value = Formulario.formatarCNPJ(CpfCnpj);
+      if (Formulario.validarCNPJ(Formulario.formatarCNPJ(CpfCnpj))) {
         this.cpfInput.classList.remove('erro');
       } else {
         this.cpfInput.classList.add('erro');
@@ -346,10 +344,6 @@ export default class FormCarousel {
 
   init() {
     if (this.form) {
-      // this.fetchProduct();
-      console.log(
-        Number(this.price.value.replace('R$', ' ').replace(',', '.')),
-      );
       this.addEventListeners();
       this.currentForm.classList.add(this.activeClass);
       this.currentNav.classList.add(this.activeClass);
