@@ -43,6 +43,7 @@ function teste() {
     <div class="col">
       <label for="status">Selecione o status</label>
       <select name="status">
+      <option value="Aguardando Pagamento">Aguardando Pagamento</option>
       <option value="Pagamento Efetuado">Pagamento Efetuado</option>
       <option value="Saiu para entrega">Saiu para entrega</option>
       <option value="Entregue">Entregue</option>

@@ -1,5 +1,6 @@
 import Formulario from './Formulario';
 import Loading from './Loading';
+import calcularBairro from './calcularBairro';
 import fetchDados from './fetchDados';
 
 export default class FormCarousel {
@@ -18,7 +19,8 @@ export default class FormCarousel {
       this.cel = this.form.querySelectorAll('input[name="phone"]');
       this.citySender = this.form.querySelector('#cidade-remetente');
       this.cityRecipient = this.form.querySelector('#cidade-destinatario');
-      this.price = this.form.querySelector('#preco');
+      // this.price = this.form.querySelector('#preco');
+      this.districts = this.form.querySelectorAll("[name='district']");
     }
 
     this.handleClickNext = this.handleClickNext.bind(this);
@@ -29,8 +31,7 @@ export default class FormCarousel {
 
   async handleSubmit(event) {
     event.preventDefault();
-    console.log('handlesubmit');
-    const productId = await this.fetchProduct();
+    const [productId, productPrice, cityPrice] = await this.fetchProduct();
     const senders = {};
     const recipients = {};
     const product = {};
@@ -47,18 +48,23 @@ export default class FormCarousel {
     recipientsInputs.forEach((input) => {
       recipients[input.name] = input.value;
     });
-    const priceFormatado = Number(
-      this.price.value.replace('R$', ' ').replace(',', '.'),
-    );
-    product.price = priceFormatado;
+    // const priceFormatado = Number(
+    //   this.price.value.replace('R$', ' ').replace(',', '.'),
+    // );
+    product.price = productPrice;
     product.source = this.citySender.value;
     product.destination = this.cityRecipient.value;
     product.id = productId;
+    if (cityPrice) {
+      product.cityPrice = cityPrice;
+    }
     const formJson = {
       senders,
       recipients,
       product,
+      status: 'Aguardando pagamento',
     };
+    console.log(formJson);
 
     const termos = document.querySelector('#termos');
 
@@ -68,20 +74,22 @@ export default class FormCarousel {
     }
 
     if (termos && !termos.checked) {
+      alert('Leia os termos!');
       termos.classList.add('erro');
       return;
     }
 
     if (!Formulario.validarTelefone(this.cel[this.index].value)) {
-      termos.classList.add('erro');
+      alert('Telefone inválido');
+      this.cel[this.index].classList.add('erro');
       return;
     }
 
-    if (!this.price.hasAttribute('readonly')) {
-      alert('Não tente modificar o HTML!');
-      this.limparInput();
-      return;
-    }
+    // if (!this.price.hasAttribute('readonly')) {
+    //   alert('Não tente modificar o HTML!');
+    //   this.limparInput();
+    //   return;
+    // }
 
     const loading = Loading();
     this.currentForm.appendChild(loading);
@@ -99,10 +107,10 @@ export default class FormCarousel {
         const item = children[i];
         item.classList.remove(this.activeClass);
       }
-      console.log(this.confirmacaoEnvio);
+
       const div = this.confirmacaoEnvio(enviar.ok);
       this.form.appendChild(div);
-      console.log(enviar);
+
       div.querySelector('.voltar').addEventListener('click', (e) => {
         e.preventDefault();
         for (let i = 0; i < children.length; i += 1) {
@@ -121,7 +129,6 @@ export default class FormCarousel {
       });
       // this.limparInput();
     } catch (error) {
-      console.log(this.confirmacaoEnvio);
       const { children } = this.form;
       for (let i = 0; i < children.length; i += 1) {
         const item = children[i];
@@ -153,37 +160,68 @@ export default class FormCarousel {
   async fetchProduct() {
     const produtos = await fetchDados(
       `https://zoe-production-06b7.up.railway.app/product`,
-      'GET',
     );
     const produtosResponse = await produtos.json();
     const selectSender = this.citySender.value.toLowerCase().trim();
     const selectRecipient = this.cityRecipient.value.toLowerCase().trim();
-    console.log(produtosResponse);
+    const districtsInput = document.querySelectorAll('[name="district"]');
     let productId;
-    produtosResponse.forEach((produto) => {
-      console.log(produto);
-      const { source, destination, price, id } = produto;
+    let productPrice;
+    let productCity;
+    let bairroEncontrado = false;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const produto of produtosResponse) {
+      const { source, destination, price, id, cityPrice } = produto;
       const sourceFormatado = source.toLowerCase().trim();
       const destinationFormatado = destination.toLowerCase().trim();
       const preco = this.form.querySelector('#preco');
-      console.log(
-        `valor do select ${selectRecipient}, valor do json ${destination}`,
-      );
+
       if (
-        (selectSender === sourceFormatado &&
+        ((selectSender === sourceFormatado &&
           selectRecipient === destinationFormatado) ||
-        (selectSender === destinationFormatado &&
-          selectRecipient === sourceFormatado)
+          (selectSender === destinationFormatado &&
+            selectRecipient === sourceFormatado)) &&
+        !bairroEncontrado
       ) {
         preco.value = `R$ ${price},00`;
         productId = id;
+        productPrice = price;
       }
+
+      if (
+        selectSender === sourceFormatado &&
+        selectRecipient === sourceFormatado &&
+        cityPrice &&
+        !bairroEncontrado
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        const valueBairro = await calcularBairro(
+          districtsInput[0].value.toLowerCase().trim(),
+          districtsInput[1].value.toLowerCase().trim(),
+        );
+        // eslint-disable-next-line no-await-in-loop
+        productPrice = await valueBairro;
+        productCity = {};
+        productCity.price = productPrice;
+        productCity.sourceNeighborhood = districtsInput[0].value
+          .toLowerCase()
+          .trim();
+        productCity.destinationNeighborhood = districtsInput[1].value
+          .toLowerCase()
+          .trim();
+        preco.value = `R$ ${productPrice},00`;
+        productId = id;
+        console.log(productId);
+        bairroEncontrado = true;
+      }
+
       if (selectSender === '' || selectRecipient === '') {
         preco.value = '';
       }
-    });
-
-    return productId;
+    }
+    console.log(productId);
+    if (productCity) return [productId, productPrice, productCity];
+    return [productId, productPrice];
   }
 
   confirmacaoEnvio(status, erro) {
@@ -201,12 +239,12 @@ export default class FormCarousel {
       const div = document.createElement('div');
       div.classList.add(this.activeClass, 'confirmacao-envio');
       div.innerHTML = `
-    <img src="../dist/assets/img/error.svg">
-    <h2>${erro}<h2>
-    <div class="confirmacao-envio-btn">
-      <button class="btn voltar">Tentar Novamente</button>
-      <a href="../dist/contato.html" class="btn">Fale Conosco</a>
-    </div>
+      <img src="../dist/assets/img/error.svg">
+      <h2>${erro}<h2>
+      <div class="confirmacao-envio-btn">
+        <button class="btn voltar">Tentar Novamente</button>
+        <a href="../dist/contato.html" class="btn">Fale Conosco</a>
+      </div>
     `;
       return div;
     }
@@ -265,8 +303,6 @@ export default class FormCarousel {
       this.currentNav = this.nav[this.index];
       this.currentNav.classList.add(this.activeClass);
 
-      console.log(this.form);
-
       if (this.index === this.form.children.length - 1) {
         this.form.addEventListener('submit', this.handleSubmit);
       }
@@ -279,7 +315,6 @@ export default class FormCarousel {
     event.preventDefault();
     if (this.index >= 0) {
       this.index -= 1;
-      console.log(this.index);
       const { children } = this.form;
       for (let i = 0; i < children.length; i += 1) {
         const item = children[i];
@@ -295,20 +330,21 @@ export default class FormCarousel {
   }
 
   formatarCPForCPNJ(value) {
-    if (value.length > 18) {
-      value = value.slice(0, 18);
+    let CpfCnpj = value;
+    if (CpfCnpj.length > 18) {
+      CpfCnpj = value.slice(0, 18);
     }
 
-    if (value.length <= 14) {
-      this.cpfInput.value = Formulario.formatarCPF(value);
-      if (Formulario.validarCPF(Formulario.formatarCPF(value))) {
+    if (CpfCnpj.length <= 14) {
+      this.cpfInput.value = Formulario.formatarCPF(CpfCnpj);
+      if (Formulario.validarCPF(Formulario.formatarCPF(CpfCnpj))) {
         this.cpfInput.classList.remove('erro');
       } else {
         this.cpfInput.classList.add('erro');
       }
     } else {
-      this.cpfInput.value = Formulario.formatarCNPJ(value);
-      if (Formulario.validarCNPJ(Formulario.formatarCNPJ(value))) {
+      this.cpfInput.value = Formulario.formatarCNPJ(CpfCnpj);
+      if (Formulario.validarCNPJ(Formulario.formatarCNPJ(CpfCnpj))) {
         this.cpfInput.classList.remove('erro');
       } else {
         this.cpfInput.classList.add('erro');
@@ -336,6 +372,10 @@ export default class FormCarousel {
       this.formatarCPForCPNJ(this.cpfInput.value);
     });
 
+    this.districts.forEach((district) => {
+      district.addEventListener('input', this.fetchProduct);
+    });
+
     this.cel.forEach((cel) => {
       cel.addEventListener('input', (event) => {
         const phone = cel;
@@ -346,10 +386,6 @@ export default class FormCarousel {
 
   init() {
     if (this.form) {
-      // this.fetchProduct();
-      console.log(
-        Number(this.price.value.replace('R$', ' ').replace(',', '.')),
-      );
       this.addEventListeners();
       this.currentForm.classList.add(this.activeClass);
       this.currentNav.classList.add(this.activeClass);

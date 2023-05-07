@@ -21,6 +21,14 @@
   box-shadow: 0px 0px 10px rgba(255, 187, 0, .5);
 }
 
+.district{
+  display:none;
+}
+
+.district.ativo{
+  display: block;
+}
+
 @media (max-width:800px) {
   .valores-bg{
     background: linear-gradient(var(--cor-00)70%, var(--cor-12)0);

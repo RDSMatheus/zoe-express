@@ -1,4 +1,5 @@
 import Loading from './Loading';
+import calcularBairro from './calcularBairro';
 import fetchDados from './fetchDados';
 
 export default class SimularValores {
@@ -20,8 +21,8 @@ export default class SimularValores {
           'https://zoe-production-06b7.up.railway.app/product',
           'GET',
         );
-        const dadosJson = await dadosFetch.json()
-        console.log(dadosJson)
+        const dadosJson = await dadosFetch.json();
+        console.log(dadosJson);
         return dadosJson;
       } catch (error) {
         console.log(error);
@@ -41,48 +42,86 @@ export default class SimularValores {
     div.className = 'valores-popup cor-p5 ativo';
     div.setAttribute('data-anime', 'slide-left');
     div.innerHTML = `
-    <h1>VALOR R$${valor},00</h1>
+    <h1>${valor}</h1>
   `;
     this.container.appendChild(div);
     return div;
   }
 
-  handleClick(event) {
+  async handleClick(event) {
     event.preventDefault();
-    this.dadosFetch().then((dadosJson) => {
-      const select1 = this.form[0].value.toLowerCase().replace(/-/g, " ").trim();
-      const select2 = this.form[1].value.toLowerCase().replace(/-/g, " ").trim();
+    let value = null;
+    let bairroEncontrado = false;
+    this.dadosFetch().then(async (dadosJson) => {
+      const select1 = this.form[0].value
+        .toLowerCase()
+        .replace(/-/g, ' ')
+        .trim();
+      const select2 = this.form[1].value
+        .toLowerCase()
+        .replace(/-/g, ' ')
+        .trim();
 
-      let value = null;
-      console.log(select1, select2)
       if (dadosJson) {
-        dadosJson.forEach((item) => {
-          console.log(item)
+        // eslint-disable-next-line no-restricted-syntax
+        for (const item of dadosJson) {
           const origem = item.source.toLowerCase();
-          console.log(origem)
           const destino = item.destination.toLowerCase();
           if (
-            (origem === select1 && destino === select2) ||
-            (origem === select2 && destino === select1)
+            ((origem === select1 && destino === select2) ||
+              (origem === select2 && destino === select1)) &&
+            !bairroEncontrado
           ) {
             value = item.price;
-            console.log(value)
+            console.log(value);
+            if (value) {
+              this.createDiv(`Valor: R$${value.toFixed(2).replace('.', ',')}`);
+              return;
+            }
           }
-        });
-      }  else {
-        // eslint-disable-next-line no-alert
+          if (origem === select1 && origem === select2 && !bairroEncontrado) {
+            const districtsInput = document.querySelectorAll('.district input');
+            // eslint-disable-next-line no-await-in-loop
+            const valueBairro = await calcularBairro(
+              districtsInput[0].value.toLowerCase().trim(),
+              districtsInput[1].value.toLowerCase().trim(),
+            );
+            // eslint-disable-next-line no-await-in-loop
+            value = await valueBairro;
+            console.log(value);
+            if (value) {
+              console.log(
+                this.createDiv(
+                  `Valor: R$${value.toFixed(2).replace('.', ',')}`,
+                ),
+              );
+              bairroEncontrado = true;
+            }
+          }
+        }
+        if (!value && !bairroEncontrado) {
+          alert('Insira o bairro correto');
+          this.createDiv('[ERRO] Bairro Incorreto');
+        }
+      } else {
         window.alert('[ERROR] Insira um valor válido!');
-      }
-
-      if (value) {
-        console.log(value);
-        this.createDiv(value);
       }
     });
   }
 
+  showDistrict() {
+    const districts = document.querySelectorAll('.district');
+    districts.forEach((district) => district.classList.remove('ativo'));
+    if (this.form[0].value === this.form[1].value) {
+      districts.forEach((district) => district.classList.add('ativo'));
+    }
+  }
+
   addEventListeners() {
     this.abrir.addEventListener('click', this.handleClick);
+    this.form.forEach((select) =>
+      select.addEventListener('change', this.showDistrict),
+    );
   }
 
   init() {

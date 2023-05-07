@@ -5,7 +5,11 @@ import SimularValor from './modules/SimularValor';
 import Formulario from './modules/Formulario';
 import FormCarousel from './modules/Carousel';
 import Accordion from './modules/Accordion';
+import fetchDados from './modules/fetchDados';
+import calcularBairro from './modules/calcularBairro';
+
 import './style.css';
+import Tracking from './modules/Tracking';
 
 const menuMobile = new FixedContainer(
   '#btn-menu-mobile',
@@ -23,12 +27,13 @@ const proximo = new FormCarousel(
 proximo.init();
 
 // container de rastreio
-const containerRastreio = new FixedContainer(
-  '#btn-rastreio',
-  '[data-rastreio]',
-  '#btn-rastreio-fechar',
-);
-containerRastreio.init();
+// const containerRastreio = new FixedContainer(
+//   '#btn-rastreio',
+//   '[data-rastreio]',
+//   '#btn-rastreio-fechar',
+// );
+// containerRastreio.init();
+new Tracking().init();
 
 const containerTermos = new FixedContainer(
   '#abrir-termos',
@@ -62,3 +67,11 @@ anime.init();
 
 const accordion = new Accordion('[data-accordion] dt');
 accordion.init();
+
+// async function fetchTracking(rastreio) {
+//   const url = 'https://zoe-production-06b7.up.railway.app/tracker';
+//   const track = await fetchDados(`${url}/ZOE7280875777`);
+//   const trackJson = await track.json()
+//   console.log(trackJson.status)
+// }
+// fetchTracking();
