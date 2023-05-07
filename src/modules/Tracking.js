@@ -98,16 +98,16 @@ export default class Tracking {
       const { status } = track;
 
       switch (status) {
-        case 'Aguardando Pagamento':
+        case 'Aguardando pagamento':
           rastreioStatusItem1Img.src = './assets/img/dollar-sign-grey.svg';
           rastreioStatusItem2Img.src = './assets/img/saiu-entrega-grey.svg';
           rastreioStatusItem3Img.src = './assets/img/entregue-grey.svg';
           break;
-        case 'Pagamento Efetuado':
+        case 'Pagamento efetuado':
           rastreioStatusItem2Img.src = './assets/img/saiu-entrega-grey.svg';
           rastreioStatusItem3Img.src = './assets/img/entregue-grey.svg';
           break;
-        case 'Saiu Para Entrega':
+        case 'Saiu para entrega':
           rastreioStatusItem3Img.src = './assets/img/entregue-grey.svg';
           break;
         default:
